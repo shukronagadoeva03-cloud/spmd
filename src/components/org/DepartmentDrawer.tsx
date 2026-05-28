@@ -1,0 +1,81 @@
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ArrowLeftRight, MapPin, Workflow, Users } from "lucide-react";
+import {
+  getDept,
+  getLocation,
+  getStage,
+} from "@/data/orgStructure";
+
+interface Props {
+  deptId: string | null;
+  onClose: () => void;
+  view: "location" | "cycle";
+  onSwitchView: (view: "location" | "cycle") => void;
+}
+
+export function DepartmentDrawer({ deptId, onClose, view, onSwitchView }: Props) {
+  const dept = deptId ? getDept(deptId) : null;
+  const open = !!dept;
+  if (!dept) {
+    return (
+      <Sheet open={open} onOpenChange={(o) => !o && onClose()}>
+        <SheetContent />
+      </Sheet>
+    );
+  }
+  const loc = getLocation(dept.locationId);
+  const stage = dept.cycleStageId ? getStage(dept.cycleStageId) : null;
+  const total = dept.positions.reduce((s, p) => s + p.count, 0);
+
+  return (
+    <Sheet open={open} onOpenChange={(o) => !o && onClose()}>
+      <SheetContent className="w-full sm:max-w-md overflow-y-auto bg-zinc-950 text-zinc-100 border-zinc-800">
+        <SheetHeader className="space-y-3">
+          <SheetTitle className="text-zinc-100 text-xl leading-tight">{dept.name}</SheetTitle>
+          <SheetDescription className="text-zinc-400">{dept.description}</SheetDescription>
+          <div className="flex flex-wrap gap-2 pt-1">
+            <Badge variant="outline" className={`${loc.badge} gap-1`}>
+              <MapPin className="h-3 w-3" /> {loc.title}
+            </Badge>
+            {stage && (
+              <Badge variant="outline" className="border-yellow-500/40 bg-yellow-500/10 text-yellow-200 gap-1">
+                <Workflow className="h-3 w-3" /> Этап: {stage.title}
+              </Badge>
+            )}
+            <Badge variant="outline" className="border-zinc-700 bg-zinc-900 text-zinc-200 gap-1">
+              <Users className="h-3 w-3" /> {total} чел.
+            </Badge>
+          </div>
+        </SheetHeader>
+
+        <div className="px-4 pb-6 mt-2">
+          <div className="text-xs uppercase tracking-wider text-zinc-500 mb-2">Штатные должности</div>
+          <ul className="divide-y divide-zinc-800 rounded-lg border border-zinc-800 bg-zinc-900/60">
+            {dept.positions.map((p, i) => (
+              <li key={i} className="flex items-start justify-between gap-3 px-3 py-2 text-sm">
+                <span className="text-zinc-200">{p.title}</span>
+                <span className="shrink-0 rounded-md bg-zinc-800 px-2 py-0.5 text-xs text-zinc-300">×{p.count}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-4">
+            <div className="text-xs uppercase tracking-wider text-zinc-500 mb-2">Физическое размещение</div>
+            <p className="text-sm text-zinc-300">{loc.physical}</p>
+          </div>
+
+          <Button
+            variant="outline"
+            className="mt-5 w-full border-zinc-700 bg-zinc-900 text-zinc-100 hover:bg-zinc-800"
+            onClick={() => onSwitchView(view === "location" ? "cycle" : "location")}
+          >
+            <ArrowLeftRight className="mr-2 h-4 w-4" />
+            Показать в виде «{view === "location" ? "Производственный цикл" : "Физические локации"}»
+          </Button>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
