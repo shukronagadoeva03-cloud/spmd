@@ -112,8 +112,8 @@ export function LocationView({ onSelectDept, selectedDept }: Props) {
       </div>
 
       <p className="mt-3 text-xs text-zinc-500">
-        Подсказка: верхняя терраса — административно-производственная база, нижняя полоса — пойма реки с участками
-        добычи. Кликните по отделу, чтобы увидеть штат.
+        Подсказка: верхняя терраса — административно-производственная база, нижняя полоса — пойма
+        реки с участками добычи. Кликните по отделу, чтобы увидеть штат.
       </p>
     </div>
   );
@@ -134,23 +134,20 @@ function Zone({
 }) {
   const loc = locations.find((l) => l.id === id)!;
   const depts = departments.filter((d) => d.locationId === id);
-  const total = depts.reduce(
-    (s, d) => s + d.positions.reduce((ss, p) => ss + p.count, 0),
-    0,
-  );
+  const total = depts.reduce((s, d) => s + d.positions.reduce((ss, p) => ss + p.count, 0), 0);
   return (
     <div
       className={`relative rounded-xl border border-zinc-200 ${loc.color} backdrop-blur-sm p-3 sm:p-4 ring-1 ${loc.ring} ${className ?? ""}`}
     >
       <div className="flex items-start gap-3">
-        <div className={`rounded-lg p-2 ${loc.color} ring-1 ${loc.ring} text-zinc-900`}>
-          {icon}
-        </div>
+        <div className={`rounded-lg p-2 ${loc.color} ring-1 ${loc.ring} text-zinc-900`}>{icon}</div>
         <div className="min-w-0 flex-1">
           <div className="text-sm font-semibold text-zinc-900 leading-tight">{loc.title}</div>
           <div className="text-xs text-zinc-600">{loc.subtitle}</div>
         </div>
-        <span className="shrink-0 rounded-md bg-white/80 px-2 py-0.5 text-xs text-zinc-700">{total} чел.</span>
+        <span className="shrink-0 rounded-md bg-white/80 px-2 py-0.5 text-xs text-zinc-700">
+          {total} чел.
+        </span>
       </div>
       <ul className="mt-3 space-y-1.5">
         {depts.map((d) => {
@@ -167,7 +164,9 @@ function Zone({
                 }`}
               >
                 <span className="truncate">{d.name}</span>
-                <span className="shrink-0 text-[10px] text-zinc-500 group-hover:text-zinc-700">×{dTotal}</span>
+                <span className="shrink-0 text-[10px] text-zinc-500 group-hover:text-zinc-700">
+                  ×{dTotal}
+                </span>
               </button>
             </li>
           );

@@ -18,7 +18,9 @@ export function CycleView({ onSelectDept, selectedDept }: Props) {
     <div className="w-full rounded-2xl border border-zinc-200 bg-gradient-to-b from-white via-zinc-50 to-white p-4 sm:p-6">
       <div className="mb-3 flex items-center gap-2">
         <span className="h-2 w-2 rounded-full bg-yellow-500 animate-pulse" />
-        <h3 className="text-sm font-semibold text-zinc-900">Производственный поток: от разведки до слитка</h3>
+        <h3 className="text-sm font-semibold text-zinc-900">
+          Производственный поток: от разведки до слитка
+        </h3>
       </div>
 
       {/* Main pipeline */}
@@ -82,10 +84,7 @@ function StageColumn({
   selectedDept: string | null;
 }) {
   const depts = departments.filter((d) => d.cycleStageId === stageId);
-  const total = depts.reduce(
-    (s, d) => s + d.positions.reduce((ss, p) => ss + p.count, 0),
-    0,
-  );
+  const total = depts.reduce((s, d) => s + d.positions.reduce((ss, p) => ss + p.count, 0), 0);
 
   return (
     <div className="flex w-[200px] flex-col rounded-xl border border-zinc-200 bg-white/80 overflow-hidden shadow-sm">
@@ -116,7 +115,9 @@ function StageColumn({
                   <span className="truncate font-medium">{d.name}</span>
                   <span className="shrink-0 text-[10px] text-zinc-500">×{dTotal}</span>
                 </div>
-                <div className={`mt-1 inline-block rounded px-1.5 py-0.5 text-[10px] border ${loc.badge}`}>
+                <div
+                  className={`mt-1 inline-block rounded px-1.5 py-0.5 text-[10px] border ${loc.badge}`}
+                >
                   {loc.title.replace("Локация ", "Л.")}
                 </div>
               </button>
@@ -142,10 +143,7 @@ function SupportCard({
   selectedDept: string | null;
 }) {
   const depts = departments.filter((d) => d.supportTrackId === trackId);
-  const total = depts.reduce(
-    (s, d) => s + d.positions.reduce((ss, p) => ss + p.count, 0),
-    0,
-  );
+  const total = depts.reduce((s, d) => s + d.positions.reduce((ss, p) => ss + p.count, 0), 0);
   return (
     <div className="rounded-xl border border-zinc-200 bg-white/60 p-3 shadow-sm">
       <div className="flex items-center justify-between gap-2">

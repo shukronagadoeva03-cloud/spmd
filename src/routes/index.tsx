@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Map as MapIcon, Workflow } from "lucide-react";
+import { GitFork, Map as MapIcon, Workflow } from "lucide-react";
 import { LocationView } from "@/components/org/LocationView";
 import { CycleView } from "@/components/org/CycleView";
+import { HierarchyView } from "@/components/org/HierarchyView";
 import { DepartmentDrawer } from "@/components/org/DepartmentDrawer";
 import { totalHeadcount, departments, locations } from "@/data/orgStructure";
 
@@ -13,12 +14,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Интерактивная организационная структура золотодобывающей компании полного цикла на реке Шугнов: 2000 га, 8× ППМ-5, два вида — по локациям и по производственному циклу.",
+          "Интерактивная организационная структура золотодобывающей компании полного цикла на реке Шугнов: 2000 га, 8× ППМ-5, три вида — по локациям, по производственному циклу и по иерархии подчинения.",
       },
       { property: "og:title", content: "Оргструктура — Шугнов Голд" },
       {
         property: "og:description",
-        content: "Интерактивная оргструктура золотодобывающей компании полного цикла. 2000 га, 8× ППМ-5.",
+        content:
+          "Интерактивная оргструктура золотодобывающей компании полного цикла. 2000 га, 8× ППМ-5.",
       },
     ],
   }),
@@ -26,7 +28,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [view, setView] = useState<"location" | "cycle">("location");
+  const [view, setView] = useState<OrgView>("location");
   const [selectedDept, setSelectedDept] = useState<string | null>(null);
 
   const total = totalHeadcount();
@@ -45,9 +47,10 @@ function Index() {
                 Оргструктура золотодобывающей компании
               </h1>
               <p className="mt-2 max-w-2xl text-sm text-zinc-600">
-                Полный цикл промывки золота на 2000 гектарах поймы реки Шугнов с использованием 8 промывочных приборов
-                ППМ-5. Переключайте вид, чтобы увидеть либо физическое размещение отделов, либо порядок их участия в
-                производственном цикле.
+                Полный цикл промывки золота на 2000 гектарах поймы реки Шугнов с использованием 8
+                промывочных приборов ППМ-5. Переключайте вид, чтобы увидеть физическое размещение
+                отделов, порядок их участия в производственном цикле или схему управленческого
+                подчинения.
               </p>
             </div>
             <ViewToggle view={view} onChange={setView} />
@@ -55,10 +58,14 @@ function Index() {
         </header>
 
         <main>
-          {view === "location" ? (
+          {view === "location" && (
             <LocationView onSelectDept={setSelectedDept} selectedDept={selectedDept} />
-          ) : (
+          )}
+          {view === "cycle" && (
             <CycleView onSelectDept={setSelectedDept} selectedDept={selectedDept} />
+          )}
+          {view === "hierarchy" && (
+            <HierarchyView onSelectDept={setSelectedDept} selectedDept={selectedDept} />
           )}
         </main>
 
@@ -87,7 +94,8 @@ function Index() {
         </section>
 
         <footer className="mt-8 text-center text-[11px] text-zinc-500">
-          Кликните по любому отделу, чтобы увидеть полный штат должностей и переключиться между видами.
+          Кликните по любому отделу, чтобы увидеть полный штат должностей и переключиться между
+          видами.
         </footer>
       </div>
 
@@ -101,13 +109,9 @@ function Index() {
   );
 }
 
-function ViewToggle({
-  view,
-  onChange,
-}: {
-  view: "location" | "cycle";
-  onChange: (v: "location" | "cycle") => void;
-}) {
+type OrgView = "location" | "cycle" | "hierarchy";
+
+function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) => void }) {
   return (
     <div className="inline-flex rounded-xl border border-zinc-200 bg-zinc-100 p-1 shadow-inner">
       <button
@@ -131,6 +135,17 @@ function ViewToggle({
       >
         <Workflow className="h-4 w-4" />
         По производственному циклу
+      </button>
+      <button
+        onClick={() => onChange("hierarchy")}
+        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
+          view === "hierarchy"
+            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
+            : "text-zinc-600 hover:text-zinc-900"
+        }`}
+      >
+        <GitFork className="h-4 w-4" />
+        По иерархии
       </button>
     </div>
   );
