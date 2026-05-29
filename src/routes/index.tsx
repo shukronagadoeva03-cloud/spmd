@@ -33,18 +33,18 @@ function Index() {
   const sitesCount = locations.filter((l) => l.id === "site1" || l.id === "site2").length;
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen bg-white text-zinc-900">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10">
         <header className="mb-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <div className="text-[11px] uppercase tracking-[0.2em] text-yellow-500/80">
+              <div className="text-[11px] uppercase tracking-[0.2em] text-yellow-600">
                 Aurum · р. Шугнов · Ховалинг, Таджикистан
               </div>
-              <h1 className="mt-1 text-3xl sm:text-4xl font-bold leading-tight bg-gradient-to-r from-yellow-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent">
+              <h1 className="mt-1 text-3xl sm:text-4xl font-bold leading-tight bg-gradient-to-r from-yellow-500 via-yellow-600 to-amber-700 bg-clip-text text-transparent">
                 Оргструктура золотодобывающей компании
               </h1>
-              <p className="mt-2 max-w-2xl text-sm text-zinc-400">
+              <p className="mt-2 max-w-2xl text-sm text-zinc-600">
                 Полный цикл промывки золота на 2000 гектарах поймы реки Шугнов с использованием 8 промывочных приборов
                 ППМ-5. Переключайте вид, чтобы увидеть либо физическое размещение отделов, либо порядок их участия в
                 производственном цикле.
@@ -86,7 +86,7 @@ function Index() {
           })}
         </section>
 
-        <footer className="mt-8 text-center text-[11px] text-zinc-600">
+        <footer className="mt-8 text-center text-[11px] text-zinc-500">
           Кликните по любому отделу, чтобы увидеть полный штат должностей и переключиться между видами.
         </footer>
       </div>
@@ -109,13 +109,13 @@ function ViewToggle({
   onChange: (v: "location" | "cycle") => void;
 }) {
   return (
-    <div className="inline-flex rounded-xl border border-zinc-800 bg-zinc-900 p-1 shadow-inner">
+    <div className="inline-flex rounded-xl border border-zinc-200 bg-zinc-100 p-1 shadow-inner">
       <button
         onClick={() => onChange("location")}
         className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
           view === "location"
-            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-zinc-900 font-semibold shadow"
-            : "text-zinc-300 hover:text-zinc-100"
+            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
+            : "text-zinc-600 hover:text-zinc-900"
         }`}
       >
         <MapIcon className="h-4 w-4" />
@@ -125,8 +125,8 @@ function ViewToggle({
         onClick={() => onChange("cycle")}
         className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
           view === "cycle"
-            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-zinc-900 font-semibold shadow"
-            : "text-zinc-300 hover:text-zinc-100"
+            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
+            : "text-zinc-600 hover:text-zinc-900"
         }`}
       >
         <Workflow className="h-4 w-4" />
@@ -138,11 +138,11 @@ function ViewToggle({
 
 function Stat({ label, value, suffix }: { label: string; value: string; suffix: string }) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-3">
+    <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3">
       <div className="text-[11px] uppercase tracking-wider text-zinc-500">{label}</div>
       <div className="mt-1 flex items-baseline gap-1">
-        <span className="text-2xl font-bold text-yellow-300">{value}</span>
-        <span className="text-xs text-zinc-400">{suffix}</span>
+        <span className="text-2xl font-bold text-yellow-600">{value}</span>
+        <span className="text-xs text-zinc-500">{suffix}</span>
       </div>
     </div>
   );
