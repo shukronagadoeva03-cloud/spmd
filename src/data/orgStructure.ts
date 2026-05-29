@@ -50,26 +50,12 @@ export interface SupportTrackInfo {
   color: string;
 }
 
-export type HierarchyColorKey =
-  | "executive"
-  | "engineering"
-  | "processing"
-  | "field"
-  | "water"
-  | "maintenance"
-  | "supply"
-  | "security"
-  | "ecology"
-  | "admin";
-
 export interface HierarchyNode {
   id: string;
   title: string;
   subtitle: string;
   departmentIds: string[];
-  colorKey: HierarchyColorKey;
-  leadTitle?: string;
-  leadDepartmentId?: string;
+  accent: string;
   children?: HierarchyNode[];
 }
 
@@ -214,9 +200,7 @@ export const hierarchyTree: HierarchyNode = {
   title: "Генеральный директор",
   subtitle: "Единый центр ответственности за весь цикл: разведка → добыча → ШОУ → сбыт.",
   departmentIds: ["ceo"],
-  colorKey: "executive",
-  leadTitle: "Генеральный директор",
-  leadDepartmentId: "ceo",
+  accent: "border-yellow-500/50 bg-yellow-500/10 text-yellow-900",
   children: [
     {
       id: "engineering",
@@ -224,18 +208,14 @@ export const hierarchyTree: HierarchyNode = {
       subtitle:
         "Производственная технология, горные работы, техника, вода и промышленная безопасность.",
       departmentIds: ["chief-engineer"],
-      colorKey: "engineering",
-      leadTitle: "Главный инженер",
-      leadDepartmentId: "chief-engineer",
+      accent: "border-blue-500/35 bg-blue-500/10 text-blue-900",
       children: [
         {
           id: "geo-eco",
           title: "Геология и экологический контроль",
           subtitle: "Разведка, маркшейдерия, рекультивация и водоохранные мероприятия.",
           departmentIds: ["geology", "ecology"],
-          colorKey: "ecology",
-          leadTitle: "Главный геолог / главный эколог",
-          leadDepartmentId: "geology",
+          accent: "border-emerald-500/35 bg-emerald-500/10 text-emerald-900",
         },
         {
           id: "mining-sites",
@@ -251,27 +231,21 @@ export const hierarchyTree: HierarchyNode = {
             "site2-extract",
             "site2-wash",
           ],
-          colorKey: "field",
-          leadTitle: "Начальники горных участков",
-          leadDepartmentId: "site1-mgmt",
+          accent: "border-teal-500/35 bg-teal-500/10 text-teal-900",
         },
         {
           id: "transport-water",
           title: "Транспорт и водная инфраструктура",
           subtitle: "Подача песков к ППМ-5, вахтовая логистика, ДНС, трубы и дамбы.",
           departmentIds: ["transport", "water-pumps", "water-dams"],
-          colorKey: "water",
-          leadTitle: "Начальник транспортного отдела / старший гидротехник",
-          leadDepartmentId: "transport",
+          accent: "border-sky-500/35 bg-sky-500/10 text-sky-900",
         },
         {
           id: "maintenance",
           title: "Ремонт и механика",
           subtitle: "ЦРЦ и выездные рембригады для ППМ-5, спецтехники и автопарка.",
           departmentIds: ["crc", "letuchki"],
-          colorKey: "maintenance",
-          leadTitle: "Главный механик",
-          leadDepartmentId: "crc",
+          accent: "border-orange-500/35 bg-orange-500/10 text-orange-900",
         },
       ],
     },
@@ -280,27 +254,21 @@ export const hierarchyTree: HierarchyNode = {
       title: "ШОУ, доводка и металл",
       subtitle: "Приём шлихзолота, лабораторная доводка, плавка, учёт и реализация драгметаллов.",
       departmentIds: ["shou-mgmt"],
-      colorKey: "processing",
-      leadTitle: "Начальник ШОУ / Главный обогатитель",
-      leadDepartmentId: "shou-mgmt",
+      accent: "border-yellow-500/40 bg-yellow-500/10 text-yellow-900",
       children: [
         {
           id: "concentration-line",
           title: "Приёмка и лаборатория доводки",
           subtitle: "Контроль контейнеров с полигонов и концентрация шлиха в ШОУ.",
           departmentIds: ["acceptance", "shou-lab"],
-          colorKey: "processing",
-          leadTitle: "Инженер-обогатитель / комиссия приёмки",
-          leadDepartmentId: "acceptance",
+          accent: "border-emerald-500/35 bg-emerald-500/10 text-emerald-900",
         },
         {
           id: "metal-line",
           title: "Аффинаж и сбыт",
           subtitle: "Плавильное отделение, лигатурное золото, ВЭД и экономический учёт.",
           departmentIds: ["smelting", "sales"],
-          colorKey: "processing",
-          leadTitle: "Начальник аффинажного производства / директор по сбыту",
-          leadDepartmentId: "smelting",
+          accent: "border-amber-500/35 bg-amber-500/10 text-amber-900",
         },
       ],
     },
@@ -309,18 +277,14 @@ export const hierarchyTree: HierarchyNode = {
       title: "Снабжение, склады и ГСМ",
       subtitle: "Закупка, хранение и доставка топлива, запчастей и расходников для всего полигона.",
       departmentIds: ["supply"],
-      colorKey: "supply",
-      leadTitle: "Начальник отдела снабжения",
-      leadDepartmentId: "supply",
+      accent: "border-rose-500/35 bg-rose-500/10 text-rose-900",
       children: [
         {
           id: "fuel-stores",
           title: "Материальные склады",
           subtitle: "ГСМ, заправка, запчасти, коврики, сита, насосы и прочие расходники.",
           departmentIds: ["fuel", "warehouse"],
-          colorKey: "supply",
-          leadTitle: "Заведующие складами ГСМ и запчастей",
-          leadDepartmentId: "fuel",
+          accent: "border-orange-500/35 bg-orange-500/10 text-orange-900",
         },
       ],
     },
@@ -329,18 +293,14 @@ export const hierarchyTree: HierarchyNode = {
       title: "Служба безопасности",
       subtitle: "Центральный режим, видеонаблюдение, ГБР и посты охраны на горных участках.",
       departmentIds: ["security-central"],
-      colorKey: "security",
-      leadTitle: "Начальник службы безопасности",
-      leadDepartmentId: "security-central",
+      accent: "border-red-500/35 bg-red-500/10 text-red-900",
       children: [
         {
           id: "site-security",
           title: "Полевые посты СБ",
           subtitle: "Круглосуточная охрана промприборов и контроль съёмов на участках №1 и №2.",
           departmentIds: ["site1-security", "site2-security"],
-          colorKey: "security",
-          leadTitle: "Старшие смены охраны",
-          leadDepartmentId: "site1-security",
+          accent: "border-red-500/30 bg-red-500/10 text-red-900",
         },
       ],
     },
@@ -349,9 +309,7 @@ export const hierarchyTree: HierarchyNode = {
       title: "Административно-финансовый блок",
       subtitle: "Финансы, кадры, юридическое сопровождение, быт вахтового посёлка и медпункт.",
       departmentIds: ["finance", "hr", "ahc"],
-      colorKey: "admin",
-      leadTitle: "Заместитель по общим вопросам / главный бухгалтер",
-      leadDepartmentId: "finance",
+      accent: "border-amber-500/35 bg-amber-500/10 text-amber-900",
     },
   ],
 };
