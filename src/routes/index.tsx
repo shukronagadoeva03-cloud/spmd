@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Map, Workflow } from "lucide-react";
+import { Map as MapIcon, Workflow } from "lucide-react";
 import { LocationView } from "@/components/org/LocationView";
 import { CycleView } from "@/components/org/CycleView";
 import { DepartmentDrawer } from "@/components/org/DepartmentDrawer";
@@ -118,7 +118,7 @@ function ViewToggle({
             : "text-zinc-300 hover:text-zinc-100"
         }`}
       >
-        <Map className="h-4 w-4" />
+        <MapIcon className="h-4 w-4" />
         По локациям
       </button>
       <button
