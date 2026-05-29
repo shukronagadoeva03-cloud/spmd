@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Golden mine" },
+      { name: "description", content: "Visualize a gold mining company's organizational structure and production flow." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Golden mine" },
+      { property: "og:description", content: "Visualize a gold mining company's organizational structure and production flow." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Golden mine" },
+      { name: "twitter:description", content: "Visualize a gold mining company's organizational structure and production flow." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f6adc990-d14c-4f65-9365-950a4875022f/id-preview-bbee3f64--03194750-8b2a-4316-af3b-08d2cfdc2274.lovable.app-1780047371102.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f6adc990-d14c-4f65-9365-950a4875022f/id-preview-bbee3f64--03194750-8b2a-4316-af3b-08d2cfdc2274.lovable.app-1780047371102.png" },
     ],
     links: [
       {
