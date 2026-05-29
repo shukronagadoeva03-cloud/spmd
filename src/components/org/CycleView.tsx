@@ -15,10 +15,10 @@ interface Props {
 
 export function CycleView({ onSelectDept, selectedDept }: Props) {
   return (
-    <div className="w-full rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 p-4 sm:p-6">
+    <div className="w-full rounded-2xl border border-zinc-200 bg-gradient-to-b from-white via-zinc-50 to-white p-4 sm:p-6">
       <div className="mb-3 flex items-center gap-2">
-        <span className="h-2 w-2 rounded-full bg-yellow-400 animate-pulse" />
-        <h3 className="text-sm font-semibold text-zinc-100">Производственный поток: от разведки до слитка</h3>
+        <span className="h-2 w-2 rounded-full bg-yellow-500 animate-pulse" />
+        <h3 className="text-sm font-semibold text-zinc-900">Производственный поток: от разведки до слитка</h3>
       </div>
 
       {/* Main pipeline */}
@@ -35,7 +35,7 @@ export function CycleView({ onSelectDept, selectedDept }: Props) {
                 selectedDept={selectedDept}
               />
               {idx < cycleStages.length - 1 && (
-                <div className="mx-1 flex items-center text-zinc-600">
+                <div className="mx-1 flex items-center text-zinc-400">
                   <ChevronRight className="h-5 w-5" />
                 </div>
               )}
@@ -88,12 +88,12 @@ function StageColumn({
   );
 
   return (
-    <div className="flex w-[200px] flex-col rounded-xl border border-zinc-800 bg-zinc-950/70 overflow-hidden">
+    <div className="flex w-[200px] flex-col rounded-xl border border-zinc-200 bg-white/80 overflow-hidden shadow-sm">
       <div className={`bg-gradient-to-br ${color} px-3 py-2`}>
         <div className="text-sm font-semibold text-white leading-tight">{title}</div>
         <div className="text-[11px] text-white/80">{subtitle}</div>
       </div>
-      <div className="flex items-center justify-between px-3 py-1.5 text-[11px] text-zinc-400 border-b border-zinc-800">
+      <div className="flex items-center justify-between px-3 py-1.5 text-[11px] text-zinc-500 border-b border-zinc-200">
         <span>{depts.length} отдел.</span>
         <span>{total} чел.</span>
       </div>
@@ -108,13 +108,13 @@ function StageColumn({
                 onClick={() => onSelectDept(d.id)}
                 className={`w-full rounded-md border px-2 py-1.5 text-left text-[11px] leading-tight transition ${
                   active
-                    ? "border-yellow-500/60 bg-yellow-500/10 text-yellow-50"
-                    : "border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:bg-zinc-800"
+                    ? "border-yellow-500/60 bg-yellow-500/10 text-yellow-800"
+                    : "border-zinc-200 bg-zinc-50/60 text-zinc-800 hover:bg-zinc-100"
                 }`}
               >
                 <div className="flex items-center justify-between gap-1">
                   <span className="truncate font-medium">{d.name}</span>
-                  <span className="shrink-0 text-[10px] text-zinc-400">×{dTotal}</span>
+                  <span className="shrink-0 text-[10px] text-zinc-500">×{dTotal}</span>
                 </div>
                 <div className={`mt-1 inline-block rounded px-1.5 py-0.5 text-[10px] border ${loc.badge}`}>
                   {loc.title.replace("Локация ", "Л.")}
@@ -147,10 +147,10 @@ function SupportCard({
     0,
   );
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950/60 p-3">
+    <div className="rounded-xl border border-zinc-200 bg-white/60 p-3 shadow-sm">
       <div className="flex items-center justify-between gap-2">
         <span className={`rounded-md border px-2 py-0.5 text-xs ${color}`}>{title}</span>
-        <span className="text-[11px] text-zinc-400">{total} чел.</span>
+        <span className="text-[11px] text-zinc-500">{total} чел.</span>
       </div>
       <ul className="mt-2 space-y-1">
         {depts.map((d) => {
@@ -162,12 +162,12 @@ function SupportCard({
                 onClick={() => onSelectDept(d.id)}
                 className={`flex w-full items-center justify-between gap-2 rounded-md border px-2 py-1 text-left text-[11px] transition ${
                   active
-                    ? "border-yellow-500/60 bg-yellow-500/10 text-yellow-50"
-                    : "border-zinc-800 bg-zinc-900/40 text-zinc-200 hover:bg-zinc-900"
+                    ? "border-yellow-500/60 bg-yellow-500/10 text-yellow-800"
+                    : "border-zinc-200 bg-zinc-50/40 text-zinc-800 hover:bg-zinc-50"
                 }`}
               >
                 <span className="truncate">{d.name}</span>
-                <span className="shrink-0 text-[10px] text-zinc-400">×{dTotal}</span>
+                <span className="shrink-0 text-[10px] text-zinc-500">×{dTotal}</span>
               </button>
             </li>
           );
