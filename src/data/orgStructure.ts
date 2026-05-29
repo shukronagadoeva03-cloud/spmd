@@ -64,7 +64,7 @@ export const locations: LocationInfo[] = [
     physical: "Безопасное неподтопляемое плато вдали от русла реки. Огороженная административная зона.",
     color: "bg-amber-500/15",
     ring: "ring-amber-500/40",
-    badge: "bg-amber-500/20 text-amber-200 border-amber-500/40",
+    badge: "bg-amber-500/15 text-amber-800 border-amber-500/30",
   },
   {
     id: "shou",
@@ -73,7 +73,7 @@ export const locations: LocationInfo[] = [
     physical: "Отдельное бетонное здание бункерного типа на территории центральной базы. Тройной контур охраны, видеонаблюдение 24/7.",
     color: "bg-yellow-500/15",
     ring: "ring-yellow-500/50",
-    badge: "bg-yellow-500/20 text-yellow-200 border-yellow-500/40",
+    badge: "bg-yellow-500/15 text-yellow-800 border-yellow-500/30",
   },
   {
     id: "industrial",
@@ -82,7 +82,7 @@ export const locations: LocationInfo[] = [
     physical: "Рядом с центральным штабом, на безопасном удалении от жилых модулей.",
     color: "bg-orange-500/15",
     ring: "ring-orange-500/40",
-    badge: "bg-orange-500/20 text-orange-200 border-orange-500/40",
+    badge: "bg-orange-500/15 text-orange-800 border-orange-500/30",
   },
   {
     id: "site1",
@@ -91,7 +91,7 @@ export const locations: LocationInfo[] = [
     physical: "Мобильный вагончик-офис прямо на полигоне в пойме реки.",
     color: "bg-emerald-500/15",
     ring: "ring-emerald-500/40",
-    badge: "bg-emerald-500/20 text-emerald-200 border-emerald-500/40",
+    badge: "bg-emerald-500/15 text-emerald-800 border-emerald-500/30",
   },
   {
     id: "site2",
@@ -100,7 +100,7 @@ export const locations: LocationInfo[] = [
     physical: "Автономный мобильный вагончик-офис в верхнем бьефе лицензионной площади.",
     color: "bg-teal-500/15",
     ring: "ring-teal-500/40",
-    badge: "bg-teal-500/20 text-teal-200 border-teal-500/40",
+    badge: "bg-teal-500/15 text-teal-800 border-teal-500/30",
   },
   {
     id: "water",
@@ -109,7 +109,7 @@ export const locations: LocationInfo[] = [
     physical: "Мобильные бригады, обслуживающие водозабор и берегоукрепление по всему руслу 2000 га.",
     color: "bg-sky-500/15",
     ring: "ring-sky-500/40",
-    badge: "bg-sky-500/20 text-sky-200 border-sky-500/40",
+    badge: "bg-sky-500/15 text-sky-800 border-sky-500/30",
   },
 ];
 
@@ -125,12 +125,12 @@ export const cycleStages: CycleStageInfo[] = [
 ];
 
 export const supportTracks: SupportTrackInfo[] = [
-  { id: "mechanics", title: "Механика и ремонт", color: "bg-orange-500/20 border-orange-500/40 text-orange-200" },
-  { id: "water", title: "Вода и берегоукрепление", color: "bg-sky-500/20 border-sky-500/40 text-sky-200" },
-  { id: "supply", title: "Снабжение и ГСМ", color: "bg-rose-500/20 border-rose-500/40 text-rose-200" },
-  { id: "security", title: "Безопасность", color: "bg-red-500/20 border-red-500/40 text-red-200" },
-  { id: "ecology", title: "Экология", color: "bg-lime-500/20 border-lime-500/40 text-lime-200" },
-  { id: "admin", title: "HR · Финансы · Юристы", color: "bg-amber-500/20 border-amber-500/40 text-amber-200" },
+  { id: "mechanics", title: "Механика и ремонт", color: "bg-orange-500/15 border-orange-500/30 text-orange-800" },
+  { id: "water", title: "Вода и берегоукрепление", color: "bg-sky-500/15 border-sky-500/30 text-sky-800" },
+  { id: "supply", title: "Снабжение и ГСМ", color: "bg-rose-500/15 border-rose-500/30 text-rose-800" },
+  { id: "security", title: "Безопасность", color: "bg-red-500/15 border-red-500/30 text-red-800" },
+  { id: "ecology", title: "Экология", color: "bg-lime-500/15 border-lime-500/30 text-lime-800" },
+  { id: "admin", title: "HR · Финансы · Юристы", color: "bg-amber-500/15 border-amber-500/30 text-amber-800" },
 ];
 
 export const departments: Department[] = [
