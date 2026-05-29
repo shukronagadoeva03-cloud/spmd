@@ -235,6 +235,7 @@ export const hierarchyTree: HierarchyNode = {
           departmentIds: ["geology", "ecology"],
           colorKey: "ecology",
           leadTitle: "Главный геолог / главный эколог",
+          leadDepartmentId: "geology",
         },
         {
           id: "mining-sites",
@@ -252,6 +253,7 @@ export const hierarchyTree: HierarchyNode = {
           ],
           colorKey: "field",
           leadTitle: "Начальники горных участков",
+          leadDepartmentId: "site1-mgmt",
         },
         {
           id: "transport-water",
@@ -260,6 +262,7 @@ export const hierarchyTree: HierarchyNode = {
           departmentIds: ["transport", "water-pumps", "water-dams"],
           colorKey: "water",
           leadTitle: "Начальник транспортного отдела / старший гидротехник",
+          leadDepartmentId: "transport",
         },
         {
           id: "maintenance",
@@ -268,6 +271,7 @@ export const hierarchyTree: HierarchyNode = {
           departmentIds: ["crc", "letuchki"],
           colorKey: "maintenance",
           leadTitle: "Главный механик",
+          leadDepartmentId: "crc",
         },
       ],
     },
@@ -287,6 +291,7 @@ export const hierarchyTree: HierarchyNode = {
           departmentIds: ["acceptance", "shou-lab"],
           colorKey: "processing",
           leadTitle: "Инженер-обогатитель / комиссия приёмки",
+          leadDepartmentId: "acceptance",
         },
         {
           id: "metal-line",
@@ -295,6 +300,7 @@ export const hierarchyTree: HierarchyNode = {
           departmentIds: ["smelting", "sales"],
           colorKey: "processing",
           leadTitle: "Начальник аффинажного производства / директор по сбыту",
+          leadDepartmentId: "smelting",
         },
       ],
     },
@@ -314,6 +320,7 @@ export const hierarchyTree: HierarchyNode = {
           departmentIds: ["fuel", "warehouse"],
           colorKey: "supply",
           leadTitle: "Заведующие складами ГСМ и запчастей",
+          leadDepartmentId: "fuel",
         },
       ],
     },
@@ -333,6 +340,7 @@ export const hierarchyTree: HierarchyNode = {
           departmentIds: ["site1-security", "site2-security"],
           colorKey: "security",
           leadTitle: "Старшие смены охраны",
+          leadDepartmentId: "site1-security",
         },
       ],
     },
@@ -343,6 +351,7 @@ export const hierarchyTree: HierarchyNode = {
       departmentIds: ["finance", "hr", "ahc"],
       colorKey: "admin",
       leadTitle: "Заместитель по общим вопросам / главный бухгалтер",
+      leadDepartmentId: "finance",
     },
   ],
 };
