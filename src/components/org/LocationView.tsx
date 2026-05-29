@@ -1,4 +1,4 @@
-import { Building2, ShieldCheck, Wrench, Mountain, Waves, Droplets } from "lucide-react";
+import { Building2, ShieldCheck, Wrench, Mountain, Droplets } from "lucide-react";
 import { departments, locations, type LocationId } from "@/data/orgStructure";
 
 interface Props {
@@ -19,7 +19,7 @@ export function LocationView({ onSelectDept, selectedDept }: Props) {
   return (
     <div className="relative w-full">
       {/* Schematic map */}
-      <div className="relative w-full rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 overflow-hidden">
+      <div className="relative w-full rounded-2xl border border-zinc-200 bg-gradient-to-b from-white via-zinc-50 to-white overflow-hidden">
         {/* River SVG layer */}
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none"
@@ -33,7 +33,7 @@ export function LocationView({ onSelectDept, selectedDept }: Props) {
               <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.35" />
             </linearGradient>
             <linearGradient id="plateau" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#1c1917" stopOpacity="0.0" />
+              <stop offset="0%" stopColor="#f5f5f4" stopOpacity="0.0" />
               <stop offset="100%" stopColor="#a8a29e" stopOpacity="0.06" />
             </linearGradient>
           </defs>
@@ -51,10 +51,10 @@ export function LocationView({ onSelectDept, selectedDept }: Props) {
             strokeWidth="2"
             fill="none"
           />
-          <text x="940" y="535" fill="#7dd3fc" fontSize="14" opacity="0.7">
+          <text x="940" y="535" fill="#0ea5e9" fontSize="14" opacity="0.7">
             р. Шугнов →
           </text>
-          <text x="20" y="535" fill="#7dd3fc" fontSize="14" opacity="0.7">
+          <text x="20" y="535" fill="#0ea5e9" fontSize="14" opacity="0.7">
             ← верхнее течение
           </text>
         </svg>
@@ -140,17 +140,17 @@ function Zone({
   );
   return (
     <div
-      className={`relative rounded-xl border border-zinc-800 ${loc.color} backdrop-blur-sm p-3 sm:p-4 ring-1 ${loc.ring} ${className ?? ""}`}
+      className={`relative rounded-xl border border-zinc-200 ${loc.color} backdrop-blur-sm p-3 sm:p-4 ring-1 ${loc.ring} ${className ?? ""}`}
     >
       <div className="flex items-start gap-3">
-        <div className={`rounded-lg p-2 ${loc.color} ring-1 ${loc.ring} text-zinc-100`}>
+        <div className={`rounded-lg p-2 ${loc.color} ring-1 ${loc.ring} text-zinc-900`}>
           {icon}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="text-sm font-semibold text-zinc-100 leading-tight">{loc.title}</div>
-          <div className="text-xs text-zinc-400">{loc.subtitle}</div>
+          <div className="text-sm font-semibold text-zinc-900 leading-tight">{loc.title}</div>
+          <div className="text-xs text-zinc-600">{loc.subtitle}</div>
         </div>
-        <span className="shrink-0 rounded-md bg-zinc-900/80 px-2 py-0.5 text-xs text-zinc-300">{total} чел.</span>
+        <span className="shrink-0 rounded-md bg-white/80 px-2 py-0.5 text-xs text-zinc-700">{total} чел.</span>
       </div>
       <ul className="mt-3 space-y-1.5">
         {depts.map((d) => {
@@ -162,12 +162,12 @@ function Zone({
                 onClick={() => onSelectDept(d.id)}
                 className={`group flex w-full items-center justify-between gap-2 rounded-md border px-2.5 py-1.5 text-left text-xs transition ${
                   active
-                    ? "border-yellow-500/60 bg-yellow-500/10 text-yellow-50"
-                    : "border-zinc-800 bg-zinc-950/50 text-zinc-200 hover:border-zinc-700 hover:bg-zinc-900"
+                    ? "border-yellow-500/60 bg-yellow-500/10 text-yellow-800"
+                    : "border-zinc-200 bg-white/50 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50"
                 }`}
               >
                 <span className="truncate">{d.name}</span>
-                <span className="shrink-0 text-[10px] text-zinc-400 group-hover:text-zinc-200">×{dTotal}</span>
+                <span className="shrink-0 text-[10px] text-zinc-500 group-hover:text-zinc-700">×{dTotal}</span>
               </button>
             </li>
           );
