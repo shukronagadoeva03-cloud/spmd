@@ -9,13 +9,7 @@ export type CycleStageId =
   | "smelting"
   | "sales";
 
-export type SupportTrackId =
-  | "mechanics"
-  | "supply"
-  | "security"
-  | "ecology"
-  | "admin"
-  | "water";
+export type SupportTrackId = "mechanics" | "supply" | "security" | "ecology" | "admin" | "water";
 
 export interface Position {
   title: string;
@@ -56,12 +50,36 @@ export interface SupportTrackInfo {
   color: string;
 }
 
+export type HierarchyColorKey =
+  | "executive"
+  | "engineering"
+  | "processing"
+  | "field"
+  | "water"
+  | "maintenance"
+  | "supply"
+  | "security"
+  | "ecology"
+  | "admin";
+
+export interface HierarchyNode {
+  id: string;
+  title: string;
+  subtitle: string;
+  departmentIds: string[];
+  colorKey: HierarchyColorKey;
+  leadTitle?: string;
+  leadDepartmentId?: string;
+  children?: HierarchyNode[];
+}
+
 export const locations: LocationInfo[] = [
   {
     id: "hq",
     title: "Локация 1 — Центральный штаб",
     subtitle: "Управление и АХЧ",
-    physical: "Безопасное неподтопляемое плато вдали от русла реки. Огороженная административная зона.",
+    physical:
+      "Безопасное неподтопляемое плато вдали от русла реки. Огороженная административная зона.",
     color: "bg-amber-500/15",
     ring: "ring-amber-500/40",
     badge: "bg-amber-500/15 text-amber-800 border-amber-500/30",
@@ -70,7 +88,8 @@ export const locations: LocationInfo[] = [
     id: "shou",
     title: "Локация 2 — ШОУ",
     subtitle: "Шлихтообогатительный участок",
-    physical: "Отдельное бетонное здание бункерного типа на территории центральной базы. Тройной контур охраны, видеонаблюдение 24/7.",
+    physical:
+      "Отдельное бетонное здание бункерного типа на территории центральной базы. Тройной контур охраны, видеонаблюдение 24/7.",
     color: "bg-yellow-500/15",
     ring: "ring-yellow-500/50",
     badge: "bg-yellow-500/15 text-yellow-800 border-yellow-500/30",
@@ -106,7 +125,8 @@ export const locations: LocationInfo[] = [
     id: "water",
     title: "Водная служба",
     subtitle: "Курсирует вдоль реки",
-    physical: "Мобильные бригады, обслуживающие водозабор и берегоукрепление по всему руслу 2000 га.",
+    physical:
+      "Мобильные бригады, обслуживающие водозабор и берегоукрепление по всему руслу 2000 га.",
     color: "bg-sky-500/15",
     ring: "ring-sky-500/40",
     badge: "bg-sky-500/15 text-sky-800 border-sky-500/30",
@@ -114,24 +134,218 @@ export const locations: LocationInfo[] = [
 ];
 
 export const cycleStages: CycleStageInfo[] = [
-  { id: "exploration", title: "Разведка", short: "Геология и маркшейдерия", color: "from-violet-500 to-violet-700" },
-  { id: "preparation", title: "Подготовка", short: "Вскрыша, снятие торфов", color: "from-indigo-500 to-indigo-700" },
-  { id: "extraction", title: "Добыча песков", short: "Экскаваторы, бульдозеры", color: "from-blue-500 to-blue-700" },
-  { id: "transport", title: "Транспортировка", short: "Подача к ППМ-5", color: "from-sky-500 to-sky-700" },
-  { id: "washing", title: "Промывка", short: "8× ППМ-5 на 4 участках", color: "from-teal-500 to-teal-700" },
-  { id: "concentration", title: "Доводка шлиха", short: "ШОУ — концентрация", color: "from-emerald-500 to-emerald-700" },
-  { id: "smelting", title: "Плавка / Аффинаж", short: "Слитки, лигатурное золото", color: "from-yellow-500 to-amber-600" },
-  { id: "sales", title: "Учёт и сбыт", short: "Драгметаллы, ВЭД", color: "from-amber-500 to-orange-700" },
+  {
+    id: "exploration",
+    title: "Разведка",
+    short: "Геология и маркшейдерия",
+    color: "from-violet-500 to-violet-700",
+  },
+  {
+    id: "preparation",
+    title: "Подготовка",
+    short: "Вскрыша, снятие торфов",
+    color: "from-indigo-500 to-indigo-700",
+  },
+  {
+    id: "extraction",
+    title: "Добыча песков",
+    short: "Экскаваторы, бульдозеры",
+    color: "from-blue-500 to-blue-700",
+  },
+  {
+    id: "transport",
+    title: "Транспортировка",
+    short: "Подача к ППМ-5",
+    color: "from-sky-500 to-sky-700",
+  },
+  {
+    id: "washing",
+    title: "Промывка",
+    short: "8× ППМ-5 на 4 участках",
+    color: "from-teal-500 to-teal-700",
+  },
+  {
+    id: "concentration",
+    title: "Доводка шлиха",
+    short: "ШОУ — концентрация",
+    color: "from-emerald-500 to-emerald-700",
+  },
+  {
+    id: "smelting",
+    title: "Плавка / Аффинаж",
+    short: "Слитки, лигатурное золото",
+    color: "from-yellow-500 to-amber-600",
+  },
+  {
+    id: "sales",
+    title: "Учёт и сбыт",
+    short: "Драгметаллы, ВЭД",
+    color: "from-amber-500 to-orange-700",
+  },
 ];
 
 export const supportTracks: SupportTrackInfo[] = [
-  { id: "mechanics", title: "Механика и ремонт", color: "bg-orange-500/15 border-orange-500/30 text-orange-800" },
-  { id: "water", title: "Вода и берегоукрепление", color: "bg-sky-500/15 border-sky-500/30 text-sky-800" },
-  { id: "supply", title: "Снабжение и ГСМ", color: "bg-rose-500/15 border-rose-500/30 text-rose-800" },
+  {
+    id: "mechanics",
+    title: "Механика и ремонт",
+    color: "bg-orange-500/15 border-orange-500/30 text-orange-800",
+  },
+  {
+    id: "water",
+    title: "Вода и берегоукрепление",
+    color: "bg-sky-500/15 border-sky-500/30 text-sky-800",
+  },
+  {
+    id: "supply",
+    title: "Снабжение и ГСМ",
+    color: "bg-rose-500/15 border-rose-500/30 text-rose-800",
+  },
   { id: "security", title: "Безопасность", color: "bg-red-500/15 border-red-500/30 text-red-800" },
   { id: "ecology", title: "Экология", color: "bg-lime-500/15 border-lime-500/30 text-lime-800" },
-  { id: "admin", title: "HR · Финансы · Юристы", color: "bg-amber-500/15 border-amber-500/30 text-amber-800" },
+  {
+    id: "admin",
+    title: "HR · Финансы · Юристы",
+    color: "bg-amber-500/15 border-amber-500/30 text-amber-800",
+  },
 ];
+
+export const hierarchyTree: HierarchyNode = {
+  id: "company",
+  title: "Генеральный директор",
+  subtitle: "Единый центр ответственности за весь цикл: разведка → добыча → ШОУ → сбыт.",
+  departmentIds: ["ceo"],
+  colorKey: "executive",
+  leadTitle: "Генеральный директор",
+  leadDepartmentId: "ceo",
+  children: [
+    {
+      id: "engineering",
+      title: "Блок главного инженера",
+      subtitle:
+        "Производственная технология, горные работы, техника, вода и промышленная безопасность.",
+      departmentIds: ["chief-engineer"],
+      colorKey: "engineering",
+      leadTitle: "Главный инженер",
+      leadDepartmentId: "chief-engineer",
+      children: [
+        {
+          id: "geo-eco",
+          title: "Геология и экологический контроль",
+          subtitle: "Разведка, маркшейдерия, рекультивация и водоохранные мероприятия.",
+          departmentIds: ["geology", "ecology"],
+          colorKey: "ecology",
+          leadTitle: "Главный геолог / главный эколог",
+        },
+        {
+          id: "mining-sites",
+          title: "Горные участки №1 и №2",
+          subtitle: "Линейное руководство, вскрыша, добыча песков и промывка на 8× ППМ-5.",
+          departmentIds: [
+            "site1-mgmt",
+            "site1-prep",
+            "site1-extract",
+            "site1-wash",
+            "site2-mgmt",
+            "site2-prep",
+            "site2-extract",
+            "site2-wash",
+          ],
+          colorKey: "field",
+          leadTitle: "Начальники горных участков",
+        },
+        {
+          id: "transport-water",
+          title: "Транспорт и водная инфраструктура",
+          subtitle: "Подача песков к ППМ-5, вахтовая логистика, ДНС, трубы и дамбы.",
+          departmentIds: ["transport", "water-pumps", "water-dams"],
+          colorKey: "water",
+          leadTitle: "Начальник транспортного отдела / старший гидротехник",
+        },
+        {
+          id: "maintenance",
+          title: "Ремонт и механика",
+          subtitle: "ЦРЦ и выездные рембригады для ППМ-5, спецтехники и автопарка.",
+          departmentIds: ["crc", "letuchki"],
+          colorKey: "maintenance",
+          leadTitle: "Главный механик",
+        },
+      ],
+    },
+    {
+      id: "processing",
+      title: "ШОУ, доводка и металл",
+      subtitle: "Приём шлихзолота, лабораторная доводка, плавка, учёт и реализация драгметаллов.",
+      departmentIds: ["shou-mgmt"],
+      colorKey: "processing",
+      leadTitle: "Начальник ШОУ / Главный обогатитель",
+      leadDepartmentId: "shou-mgmt",
+      children: [
+        {
+          id: "concentration-line",
+          title: "Приёмка и лаборатория доводки",
+          subtitle: "Контроль контейнеров с полигонов и концентрация шлиха в ШОУ.",
+          departmentIds: ["acceptance", "shou-lab"],
+          colorKey: "processing",
+          leadTitle: "Инженер-обогатитель / комиссия приёмки",
+        },
+        {
+          id: "metal-line",
+          title: "Аффинаж и сбыт",
+          subtitle: "Плавильное отделение, лигатурное золото, ВЭД и экономический учёт.",
+          departmentIds: ["smelting", "sales"],
+          colorKey: "processing",
+          leadTitle: "Начальник аффинажного производства / директор по сбыту",
+        },
+      ],
+    },
+    {
+      id: "supply-chain",
+      title: "Снабжение, склады и ГСМ",
+      subtitle: "Закупка, хранение и доставка топлива, запчастей и расходников для всего полигона.",
+      departmentIds: ["supply"],
+      colorKey: "supply",
+      leadTitle: "Начальник отдела снабжения",
+      leadDepartmentId: "supply",
+      children: [
+        {
+          id: "fuel-stores",
+          title: "Материальные склады",
+          subtitle: "ГСМ, заправка, запчасти, коврики, сита, насосы и прочие расходники.",
+          departmentIds: ["fuel", "warehouse"],
+          colorKey: "supply",
+          leadTitle: "Заведующие складами ГСМ и запчастей",
+        },
+      ],
+    },
+    {
+      id: "security",
+      title: "Служба безопасности",
+      subtitle: "Центральный режим, видеонаблюдение, ГБР и посты охраны на горных участках.",
+      departmentIds: ["security-central"],
+      colorKey: "security",
+      leadTitle: "Начальник службы безопасности",
+      leadDepartmentId: "security-central",
+      children: [
+        {
+          id: "site-security",
+          title: "Полевые посты СБ",
+          subtitle: "Круглосуточная охрана промприборов и контроль съёмов на участках №1 и №2.",
+          departmentIds: ["site1-security", "site2-security"],
+          colorKey: "security",
+          leadTitle: "Старшие смены охраны",
+        },
+      ],
+    },
+    {
+      id: "administration",
+      title: "Административно-финансовый блок",
+      subtitle: "Финансы, кадры, юридическое сопровождение, быт вахтового посёлка и медпункт.",
+      departmentIds: ["finance", "hr", "ahc"],
+      colorKey: "admin",
+      leadTitle: "Заместитель по общим вопросам / главный бухгалтер",
+    },
+  ],
+};
 
 export const departments: Department[] = [
   // HQ
@@ -166,7 +380,8 @@ export const departments: Department[] = [
   {
     id: "hr",
     name: "Отдел кадров и юрист",
-    description: "Оформление вахт, кадровое делопроизводство, взаимодействие с госорганами Ховалинга.",
+    description:
+      "Оформление вахт, кадровое делопроизводство, взаимодействие с госорганами Ховалинга.",
     locationId: "hq",
     supportTrackId: "admin",
     positions: [
@@ -287,7 +502,8 @@ export const departments: Department[] = [
   {
     id: "acceptance",
     name: "Комиссия по приёму шлихзолота",
-    description: "Совместная группа (обогатитель + геолог + СБ) для приёмки контейнеров с полигонов.",
+    description:
+      "Совместная группа (обогатитель + геолог + СБ) для приёмки контейнеров с полигонов.",
     locationId: "shou",
     cycleStageId: "concentration",
     positions: [
@@ -549,10 +765,7 @@ export const departments: Department[] = [
 ];
 
 export function totalHeadcount(): number {
-  return departments.reduce(
-    (sum, d) => sum + d.positions.reduce((s, p) => s + p.count, 0),
-    0,
-  );
+  return departments.reduce((sum, d) => sum + d.positions.reduce((s, p) => s + p.count, 0), 0);
 }
 
 export function getDept(id: string): Department | undefined {
@@ -565,6 +778,10 @@ export function getLocation(id: LocationId): LocationInfo {
 
 export function getStage(id: CycleStageId): CycleStageInfo {
   return cycleStages.find((s) => s.id === id)!;
+}
+
+export function getSupportTrack(id: SupportTrackId): SupportTrackInfo {
+  return supportTracks.find((s) => s.id === id)!;
 }
 
 export function deptsByLocation(id: LocationId): Department[] {
