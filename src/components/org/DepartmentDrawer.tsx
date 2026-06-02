@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { GitFork, MapPin, Workflow, Users } from "lucide-react";
 import { getDept, getLocation, getStage } from "@/data/orgStructure";
 
-type OrgView = "location" | "cycle" | "hierarchy" | "staffing";
+type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr";
 
 interface Props {
   deptId: string | null;
