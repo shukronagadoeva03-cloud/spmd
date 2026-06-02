@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { GitFork, Map as MapIcon, Workflow } from "lucide-react";
+import { GitFork, Map as MapIcon, Workflow, FileSpreadsheet } from "lucide-react";
 import { LocationView } from "@/components/org/LocationView";
 import { CycleView } from "@/components/org/CycleView";
 import { HierarchyView } from "@/components/org/HierarchyView";
+import { StaffingTable } from "@/components/org/StaffingTable";
 import { DepartmentDrawer } from "@/components/org/DepartmentDrawer";
 import { totalHeadcount, departments, locations } from "@/data/orgStructure";
 
@@ -67,6 +68,7 @@ function Index() {
           {view === "hierarchy" && (
             <HierarchyView onSelectDept={setSelectedDept} selectedDept={selectedDept} />
           )}
+          {view === "staffing" && <StaffingTable onSelectDept={setSelectedDept} />}
         </main>
 
         <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -109,7 +111,7 @@ function Index() {
   );
 }
 
-type OrgView = "location" | "cycle" | "hierarchy";
+type OrgView = "location" | "cycle" | "hierarchy" | "staffing";
 
 function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) => void }) {
   return (
@@ -146,6 +148,17 @@ function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) 
       >
         <GitFork className="h-4 w-4" />
         По иерархии
+      </button>
+      <button
+        onClick={() => onChange("staffing")}
+        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
+          view === "staffing"
+            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
+            : "text-zinc-600 hover:text-zinc-900"
+        }`}
+      >
+        <FileSpreadsheet className="h-4 w-4" />
+        Штатное расписание
       </button>
     </div>
   );
