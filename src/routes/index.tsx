@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { GitFork, Map as MapIcon, Workflow, FileSpreadsheet } from "lucide-react";
+import { GitFork, Map as MapIcon, Workflow, FileSpreadsheet, LineChart } from "lucide-react";
 import { LocationView } from "@/components/org/LocationView";
 import { CycleView } from "@/components/org/CycleView";
 import { HierarchyView } from "@/components/org/HierarchyView";
 import { StaffingTable } from "@/components/org/StaffingTable";
+import { HrDashboard } from "@/components/org/HrDashboard";
 import { DepartmentDrawer } from "@/components/org/DepartmentDrawer";
 import { totalHeadcount, departments, locations } from "@/data/orgStructure";
 
@@ -69,6 +70,7 @@ function Index() {
             <HierarchyView onSelectDept={setSelectedDept} selectedDept={selectedDept} />
           )}
           {view === "staffing" && <StaffingTable onSelectDept={setSelectedDept} />}
+          {view === "hr" && <HrDashboard />}
         </main>
 
         <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -111,7 +113,7 @@ function Index() {
   );
 }
 
-type OrgView = "location" | "cycle" | "hierarchy" | "staffing";
+type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr";
 
 function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) => void }) {
   return (
@@ -159,6 +161,17 @@ function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) 
       >
         <FileSpreadsheet className="h-4 w-4" />
         Штатное расписание
+      </button>
+      <button
+        onClick={() => onChange("hr")}
+        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
+          view === "hr"
+            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
+            : "text-zinc-600 hover:text-zinc-900"
+        }`}
+      >
+        <LineChart className="h-4 w-4" />
+        HR аналитика
       </button>
     </div>
   );
