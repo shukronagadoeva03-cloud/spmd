@@ -538,7 +538,7 @@ function WorkforceDashboard() {
                 data={m.catData}
                 dataKey="value"
                 stroke="white"
-                content={(props: unknown) => {
+                content={((props: unknown) => {
                   const p = props as {
                     x: number;
                     y: number;
@@ -577,7 +577,7 @@ function WorkforceDashboard() {
                       )}
                     </g>
                   );
-                }}
+                }) as unknown as React.ReactElement}
               />
             </ResponsiveContainer>
           </div>
