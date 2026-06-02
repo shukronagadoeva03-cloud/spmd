@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { departments, getLocation, hierarchyTree, type HierarchyNode } from "@/data/orgStructure";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -214,7 +214,7 @@ export function StaffingTable({ onSelectDept }: Props) {
                 return s + p.count * Math.round(r.salary * (1 + r.bonusPct / 100));
               }, 0);
               return (
-                <>
+                <Fragment key={d.id}>
                   <tr
                     key={`h-${d.id}`}
                     className="border-t border-zinc-200 bg-zinc-50/70 cursor-pointer hover:bg-zinc-100"
@@ -282,7 +282,7 @@ export function StaffingTable({ onSelectDept }: Props) {
                       </tr>
                     );
                   })}
-                </>
+                </Fragment>
               );
             })}
           </tbody>
