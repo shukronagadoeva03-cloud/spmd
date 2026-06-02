@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { GitFork, MapPin, Workflow, Users } from "lucide-react";
 import { getDept, getLocation, getStage } from "@/data/orgStructure";
 
-type OrgView = "location" | "cycle" | "hierarchy";
+type OrgView = "location" | "cycle" | "hierarchy" | "staffing";
 
 interface Props {
   deptId: string | null;
@@ -108,6 +108,16 @@ export function DepartmentDrawer({ deptId, onClose, view, onSwitchView }: Props)
               >
                 <GitFork className="mr-2 h-4 w-4" />
                 Показать во вкладке «По иерархии»
+              </Button>
+            )}
+            {view !== "staffing" && (
+              <Button
+                variant="outline"
+                className="w-full border-zinc-300 bg-zinc-100 text-zinc-900 hover:bg-zinc-200"
+                onClick={() => onSwitchView("staffing")}
+              >
+                <GitFork className="mr-2 h-4 w-4" />
+                Показать в «Штатном расписании»
               </Button>
             )}
           </div>
