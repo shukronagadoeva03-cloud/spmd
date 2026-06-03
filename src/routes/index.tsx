@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { GitFork, Map as MapIcon, Workflow, FileSpreadsheet, LineChart } from "lucide-react";
+import { BookOpen, GitFork, Map as MapIcon, Workflow, FileSpreadsheet, LineChart } from "lucide-react";
 import { LocationView } from "@/components/org/LocationView";
 import { CycleView } from "@/components/org/CycleView";
 import { HierarchyView } from "@/components/org/HierarchyView";
 import { StaffingTable } from "@/components/org/StaffingTable";
 import { HrDashboard } from "@/components/org/HrDashboard";
+import { GlossaryView } from "@/components/org/GlossaryView";
 import { DepartmentDrawer } from "@/components/org/DepartmentDrawer";
 import { totalHeadcount, departments, locations } from "@/data/orgStructure";
 
@@ -71,6 +72,14 @@ function Index() {
           )}
           {view === "staffing" && <StaffingTable onSelectDept={setSelectedDept} />}
           {view === "hr" && <HrDashboard />}
+          {view === "glossary" && (
+            <GlossaryView
+              onSwitchView={(v, deptId) => {
+                setView(v);
+                if (deptId) setSelectedDept(deptId);
+              }}
+            />
+          )}
         </main>
 
         <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -113,7 +122,7 @@ function Index() {
   );
 }
 
-type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr";
+type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr" | "glossary";
 
 function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) => void }) {
   return (
@@ -172,6 +181,17 @@ function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) 
       >
         <LineChart className="h-4 w-4" />
         HR аналитика
+      </button>
+      <button
+        onClick={() => onChange("glossary")}
+        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
+          view === "glossary"
+            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
+            : "text-zinc-600 hover:text-zinc-900"
+        }`}
+      >
+        <BookOpen className="h-4 w-4" />
+        Глоссарий
       </button>
     </div>
   );
