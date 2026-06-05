@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { BookOpen, GitFork, Map as MapIcon, Workflow, FileSpreadsheet, LineChart } from "lucide-react";
+import { BookOpen, GitFork, Map as MapIcon, Workflow, FileSpreadsheet, LineChart, Globe } from "lucide-react";
 import { LocationView } from "@/components/org/LocationView";
 import { CycleView } from "@/components/org/CycleView";
 import { HierarchyView } from "@/components/org/HierarchyView";
