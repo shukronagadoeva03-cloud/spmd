@@ -122,7 +122,7 @@ function Index() {
   );
 }
 
-type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr" | "glossary";
+type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr" | "glossary" | "maps";
 
 function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) => void }) {
   return (
