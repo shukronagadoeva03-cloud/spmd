@@ -7,6 +7,7 @@ import { HierarchyView } from "@/components/org/HierarchyView";
 import { StaffingTable } from "@/components/org/StaffingTable";
 import { HrDashboard } from "@/components/org/HrDashboard";
 import { GlossaryView } from "@/components/org/GlossaryView";
+import { MapsView } from "@/components/org/MapsView";
 import { DepartmentDrawer } from "@/components/org/DepartmentDrawer";
 import { totalHeadcount, departments, locations } from "@/data/orgStructure";
 
@@ -80,6 +81,7 @@ function Index() {
               }}
             />
           )}
+          {view === "maps" && <MapsView />}
         </main>
 
         <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -192,6 +194,17 @@ function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) 
       >
         <BookOpen className="h-4 w-4" />
         Глоссарий
+      </button>
+      <button
+        onClick={() => onChange("maps")}
+        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
+          view === "maps"
+            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
+            : "text-zinc-600 hover:text-zinc-900"
+        }`}
+      >
+        <Globe className="h-4 w-4" />
+        Карта
       </button>
     </div>
   );
