@@ -59,7 +59,7 @@ export function LocationView({ onSelectDept, selectedDept }: Props) {
           </text>
         </svg>
 
-        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-4 p-4 sm:p-6 min-h-[760px] lg:min-h-[680px]">
+        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-4 p-4 sm:p-6 lg:min-h-[680px]">
           {/* Top row — plateau zones */}
           <Zone
             className="lg:col-span-4 lg:col-start-1 lg:row-start-1"
