@@ -42,15 +42,15 @@ function Index() {
     <div className="min-h-screen bg-white text-zinc-900">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10">
         <header className="mb-6">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
+          <div className="flex flex-col gap-4 lg:flex-row lg:flex-wrap lg:items-start lg:justify-between">
+            <div className="min-w-0">
               <div className="text-[11px] uppercase tracking-[0.2em] text-yellow-600">
                 Aurum · р. Шугнов · Ховалинг, Таджикистан
               </div>
-              <h1 className="mt-1 text-3xl sm:text-4xl font-bold leading-tight bg-gradient-to-r from-yellow-500 via-yellow-600 to-amber-700 bg-clip-text text-transparent">
+              <h1 className="mt-1 text-2xl sm:text-3xl md:text-4xl font-bold leading-tight bg-gradient-to-r from-yellow-500 via-yellow-600 to-amber-700 bg-clip-text text-transparent">
                 Оргструктура золотодобывающей компании
               </h1>
-              <p className="mt-2 max-w-2xl text-sm text-zinc-600">
+              <p className="mt-2 max-w-2xl text-xs sm:text-sm text-zinc-600">
                 Полный цикл промывки золота на 2000 гектарах поймы реки Шугнов с использованием 8
                 промывочных приборов ППМ-5. Переключайте вид, чтобы увидеть физическое размещение
                 отделов, порядок их участия в производственном цикле или схему управленческого
