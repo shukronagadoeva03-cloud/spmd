@@ -12,25 +12,47 @@ interface Props {
 type SalaryMap = Record<string, { salary: number; bonusPct: number }>;
 
 const STORAGE_KEY = "shugnov.staffing.v1";
+const MIN_SALARY = 2000;
+const MAX_SALARY = 13000;
+
+function clampSalary(value: number): number {
+  return Math.min(MAX_SALARY, Math.max(MIN_SALARY, value));
+}
+
+function normalizeSalaryMap(value: unknown): SalaryMap {
+  if (!value || typeof value !== "object") return {};
+
+  return Object.fromEntries(
+    Object.entries(value as SalaryMap).map(([key, row]) => [
+      key,
+      {
+        salary: clampSalary(Number(row.salary) || MIN_SALARY),
+        bonusPct: Math.max(0, Number(row.bonusPct) || 0),
+      },
+    ]),
+  );
+}
 
 // Эвристика стартовых окладов (сомони TJS / мес) по ключевым словам в названии
 function guessSalary(title: string): number {
   const t = title.toLowerCase();
-  if (/(ceo|генеральный директор)/.test(t)) return 45000;
-  if (/директор|главный инженер|главный бухгалтер|hr-директор/.test(t)) return 30000;
+  if (/(ceo|генеральный директор)/.test(t)) return 13000;
+  if (/директор|главный инженер|главный бухгалтер|hr-директор/.test(t)) return 11000;
   if (/начальник|главный геолог|главный механик|главный эколог|главный обогатитель/.test(t))
-    return 22000;
-  if (/ведущий|зам|заместитель|мастер цеха|бригадир/.test(t)) return 16000;
-  if (/инженер|геолог|маркшейдер|логист|аналитик|юрист|эколог|обогатитель|плавильщик|аффинаж/.test(t))
-    return 13000;
-  if (/машинист|оператор экскаватора|оператор|электрик|сварщик|токарь|фрезеровщик|моторист/.test(t))
-    return 11000;
-  if (/водитель|слесарь|гидромониторщик|грохотовщик|доводчик|концентраторщик|лаборант/.test(t))
     return 9000;
-  if (/охран|инспектор сб|пост|режим/.test(t)) return 8500;
-  if (/повар|прачеч|фельдшер|кладовщик|кассир|секретарь|диспетчер|заправщик/.test(t)) return 7500;
-  if (/разнорабочий|помощник/.test(t)) return 6000;
-  return 10000;
+  if (/ведущий|зам|заместитель|мастер цеха|бригадир/.test(t)) return 7500;
+  if (
+    /инженер|геолог|маркшейдер|логист|аналитик|юрист|эколог|обогатитель|плавильщик|аффинаж/.test(t)
+  )
+    return 6500;
+  if (/машинист|оператор экскаватора|оператор|электрик|сварщик|токарь|фрезеровщик|моторист/.test(t))
+    return 5500;
+  if (/водитель|слесарь|гидромониторщик|грохотовщик|доводчик|концентраторщик|лаборант/.test(t))
+    return 4500;
+  if (/охран|инспектор сб|пост|режим/.test(t)) return 4000;
+  if (/повар|прачеч|фельдшер|кладовщик|кассир|секретарь|диспетчер|заправщик/.test(t)) return 3500;
+  if (/разнорабочий|помощник/.test(t)) return 2000;
+  return 5000;
 }
 
 function bonusGuess(title: string): number {
@@ -68,7 +90,7 @@ export function StaffingTable({ onSelectDept }: Props) {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setOverrides(JSON.parse(raw));
+      if (raw) setOverrides(normalizeSalaryMap(JSON.parse(raw)));
     } catch {
       /* ignore */
     }
@@ -89,15 +111,21 @@ export function StaffingTable({ onSelectDept }: Props) {
 
   const getRow = (deptId: string, idx: number, title: string) => {
     const k = keyFor(deptId, idx);
-    const def = { salary: guessSalary(title), bonusPct: bonusGuess(title) };
+    const def = { salary: clampSalary(guessSalary(title)), bonusPct: bonusGuess(title) };
     return overrides[k] ?? def;
   };
 
-  const setRow = (deptId: string, idx: number, patch: Partial<{ salary: number; bonusPct: number }>) => {
+  const setRow = (
+    deptId: string,
+    idx: number,
+    patch: Partial<{ salary: number; bonusPct: number }>,
+  ) => {
     const k = keyFor(deptId, idx);
     setOverrides((prev) => {
       const cur = prev[k] ?? {
-        salary: guessSalary(departments.find((d) => d.id === deptId)!.positions[idx].title),
+        salary: clampSalary(
+          guessSalary(departments.find((d) => d.id === deptId)!.positions[idx].title),
+        ),
         bonusPct: bonusGuess(departments.find((d) => d.id === deptId)!.positions[idx].title),
       };
       return { ...prev, [k]: { ...cur, ...patch } };
@@ -157,8 +185,9 @@ export function StaffingTable({ onSelectDept }: Props) {
           <p className="mt-1 max-w-2xl text-xs text-zinc-600">
             Обезличенный документ, фиксирующий организационную структуру компании. Должности
             расположены иерархически — от руководителя к подчинённым, с указанием кода
-            подразделения, штатных единиц, оклада и надбавки. Ячейки оклада и надбавки можно
-            редактировать — данные сохраняются в этом браузере.
+            подразделения, штатных единиц, оклада и надбавки. Оклады ограничены диапазоном от 2 000
+            до 13 000 TJS. Ячейки оклада и надбавки можно редактировать — данные сохраняются в этом
+            браузере.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -252,11 +281,14 @@ export function StaffingTable({ onSelectDept }: Props) {
                         <td className="px-3 py-1.5 text-right">
                           <Input
                             type="number"
-                            min={0}
+                            min={MIN_SALARY}
+                            max={MAX_SALARY}
                             step={500}
                             value={r.salary}
                             onChange={(e) =>
-                              setRow(d.id, i, { salary: Math.max(0, Number(e.target.value) || 0) })
+                              setRow(d.id, i, {
+                                salary: clampSalary(Number(e.target.value) || MIN_SALARY),
+                              })
                             }
                             className="ml-auto h-7 w-28 text-right text-sm tabular-nums"
                           />
