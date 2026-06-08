@@ -127,85 +127,37 @@ function Index() {
 type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr" | "glossary" | "maps";
 
 function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) => void }) {
+  const items: Array<{ id: OrgView; label: string; short: string; Icon: typeof MapIcon }> = [
+    { id: "location", label: "По локациям", short: "Локации", Icon: MapIcon },
+    { id: "cycle", label: "По производственному циклу", short: "Цикл", Icon: Workflow },
+    { id: "hierarchy", label: "По иерархии", short: "Иерархия", Icon: GitFork },
+    { id: "staffing", label: "Штатное расписание", short: "Штат", Icon: FileSpreadsheet },
+    { id: "hr", label: "HR аналитика", short: "HR", Icon: LineChart },
+    { id: "glossary", label: "Глоссарий", short: "Глоссарий", Icon: BookOpen },
+    { id: "maps", label: "Карта", short: "Карта", Icon: Globe },
+  ];
   return (
-    <div className="inline-flex rounded-xl border border-zinc-200 bg-zinc-100 p-1 shadow-inner">
-      <button
-        onClick={() => onChange("location")}
-        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
-          view === "location"
-            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
-            : "text-zinc-600 hover:text-zinc-900"
-        }`}
-      >
-        <MapIcon className="h-4 w-4" />
-        По локациям
-      </button>
-      <button
-        onClick={() => onChange("cycle")}
-        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
-          view === "cycle"
-            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
-            : "text-zinc-600 hover:text-zinc-900"
-        }`}
-      >
-        <Workflow className="h-4 w-4" />
-        По производственному циклу
-      </button>
-      <button
-        onClick={() => onChange("hierarchy")}
-        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
-          view === "hierarchy"
-            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
-            : "text-zinc-600 hover:text-zinc-900"
-        }`}
-      >
-        <GitFork className="h-4 w-4" />
-        По иерархии
-      </button>
-      <button
-        onClick={() => onChange("staffing")}
-        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
-          view === "staffing"
-            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
-            : "text-zinc-600 hover:text-zinc-900"
-        }`}
-      >
-        <FileSpreadsheet className="h-4 w-4" />
-        Штатное расписание
-      </button>
-      <button
-        onClick={() => onChange("hr")}
-        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
-          view === "hr"
-            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
-            : "text-zinc-600 hover:text-zinc-900"
-        }`}
-      >
-        <LineChart className="h-4 w-4" />
-        HR аналитика
-      </button>
-      <button
-        onClick={() => onChange("glossary")}
-        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
-          view === "glossary"
-            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
-            : "text-zinc-600 hover:text-zinc-900"
-        }`}
-      >
-        <BookOpen className="h-4 w-4" />
-        Глоссарий
-      </button>
-      <button
-        onClick={() => onChange("maps")}
-        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
-          view === "maps"
-            ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
-            : "text-zinc-600 hover:text-zinc-900"
-        }`}
-      >
-        <Globe className="h-4 w-4" />
-        Карта
-      </button>
+    <div className="-mx-4 sm:mx-0 overflow-x-auto sm:overflow-visible">
+      <div className="inline-flex min-w-max sm:min-w-0 sm:flex-wrap rounded-xl border border-zinc-200 bg-zinc-100 p-1 shadow-inner mx-4 sm:mx-0 gap-0.5">
+        {items.map(({ id, label, short, Icon }) => {
+          const active = view === id;
+          return (
+            <button
+              key={id}
+              onClick={() => onChange(id)}
+              className={`flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs sm:text-sm whitespace-nowrap transition ${
+                active
+                  ? "bg-gradient-to-br from-yellow-400 to-amber-600 text-white font-semibold shadow"
+                  : "text-zinc-600 hover:text-zinc-900"
+              }`}
+            >
+              <Icon className="h-4 w-4 shrink-0" />
+              <span className="sm:hidden">{short}</span>
+              <span className="hidden sm:inline">{label}</span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
