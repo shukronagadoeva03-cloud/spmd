@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { BookOpen, GitFork, Map as MapIcon, Workflow, FileSpreadsheet, LineChart, Globe, Network } from "lucide-react";
+import { BookOpen, GitFork, Map as MapIcon, Workflow, FileSpreadsheet, LineChart, Globe } from "lucide-react";
 import { LocationView } from "@/components/org/LocationView";
 import { CycleView } from "@/components/org/CycleView";
 import { HierarchyView } from "@/components/org/HierarchyView";
@@ -8,7 +8,6 @@ import { StaffingTable } from "@/components/org/StaffingTable";
 import { HrDashboard } from "@/components/org/HrDashboard";
 import { GlossaryView } from "@/components/org/GlossaryView";
 import { MapsView } from "@/components/org/MapsView";
-import { DiagramView } from "@/components/org/DiagramView";
 import { DepartmentDrawer } from "@/components/org/DepartmentDrawer";
 import { totalHeadcount, departments, locations } from "@/data/orgStructure";
 
@@ -83,7 +82,6 @@ function Index() {
             />
           )}
           {view === "maps" && <MapsView />}
-          {view === "diagram" && <DiagramView />}
         </main>
 
         <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -126,7 +124,7 @@ function Index() {
   );
 }
 
-type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr" | "glossary" | "maps" | "diagram";
+type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr" | "glossary" | "maps";
 
 function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) => void }) {
   const items: Array<{ id: OrgView; label: string; short: string; Icon: typeof MapIcon }> = [
@@ -137,7 +135,6 @@ function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) 
     { id: "hr", label: "HR аналитика", short: "HR", Icon: LineChart },
     { id: "glossary", label: "Глоссарий", short: "Глоссарий", Icon: BookOpen },
     { id: "maps", label: "Карта", short: "Карта", Icon: Globe },
-    { id: "diagram", label: "Схема", short: "Схема", Icon: Network },
   ];
   return (
     <div className="-mx-4 sm:mx-0 overflow-x-auto sm:overflow-visible">
