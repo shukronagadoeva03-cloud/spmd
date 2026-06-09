@@ -83,6 +83,7 @@ function Index() {
             />
           )}
           {view === "maps" && <MapsView />}
+          {view === "diagram" && <DiagramView />}
         </main>
 
         <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -125,7 +126,7 @@ function Index() {
   );
 }
 
-type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr" | "glossary" | "maps";
+type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr" | "glossary" | "maps" | "diagram";
 
 function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) => void }) {
   const items: Array<{ id: OrgView; label: string; short: string; Icon: typeof MapIcon }> = [
@@ -136,6 +137,7 @@ function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) 
     { id: "hr", label: "HR аналитика", short: "HR", Icon: LineChart },
     { id: "glossary", label: "Глоссарий", short: "Глоссарий", Icon: BookOpen },
     { id: "maps", label: "Карта", short: "Карта", Icon: Globe },
+    { id: "diagram", label: "Оргсхема", short: "Схема", Icon: Network },
   ];
   return (
     <div className="-mx-4 sm:mx-0 overflow-x-auto sm:overflow-visible">
