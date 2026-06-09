@@ -126,7 +126,7 @@ function Index() {
   );
 }
 
-type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr" | "glossary" | "maps";
+type OrgView = "location" | "cycle" | "hierarchy" | "staffing" | "hr" | "glossary" | "maps" | "diagram";
 
 function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) => void }) {
   const items: Array<{ id: OrgView; label: string; short: string; Icon: typeof MapIcon }> = [
