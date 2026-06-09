@@ -83,6 +83,7 @@ function Index() {
             />
           )}
           {view === "maps" && <MapsView />}
+          {view === "diagram" && <DiagramView />}
         </main>
 
         <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
