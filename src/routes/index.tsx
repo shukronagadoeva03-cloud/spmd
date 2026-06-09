@@ -8,6 +8,7 @@ import { StaffingTable } from "@/components/org/StaffingTable";
 import { HrDashboard } from "@/components/org/HrDashboard";
 import { GlossaryView } from "@/components/org/GlossaryView";
 import { MapsView } from "@/components/org/MapsView";
+import { DiagramView } from "@/components/org/DiagramView";
 import { DepartmentDrawer } from "@/components/org/DepartmentDrawer";
 import { totalHeadcount, departments, locations } from "@/data/orgStructure";
 
