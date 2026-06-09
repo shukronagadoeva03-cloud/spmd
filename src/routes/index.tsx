@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { BookOpen, GitFork, Map as MapIcon, Workflow, FileSpreadsheet, LineChart, Globe } from "lucide-react";
+import { BookOpen, GitFork, Map as MapIcon, Workflow, FileSpreadsheet, LineChart, Globe, Network } from "lucide-react";
 import { LocationView } from "@/components/org/LocationView";
 import { CycleView } from "@/components/org/CycleView";
 import { HierarchyView } from "@/components/org/HierarchyView";
@@ -8,6 +8,7 @@ import { StaffingTable } from "@/components/org/StaffingTable";
 import { HrDashboard } from "@/components/org/HrDashboard";
 import { GlossaryView } from "@/components/org/GlossaryView";
 import { MapsView } from "@/components/org/MapsView";
+import { DiagramView } from "@/components/org/DiagramView";
 import { DepartmentDrawer } from "@/components/org/DepartmentDrawer";
 import { totalHeadcount, departments, locations } from "@/data/orgStructure";
 
