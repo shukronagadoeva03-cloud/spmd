@@ -137,6 +137,7 @@ function ViewToggle({ view, onChange }: { view: OrgView; onChange: (v: OrgView) 
     { id: "hr", label: "HR аналитика", short: "HR", Icon: LineChart },
     { id: "glossary", label: "Глоссарий", short: "Глоссарий", Icon: BookOpen },
     { id: "maps", label: "Карта", short: "Карта", Icon: Globe },
+    { id: "diagram", label: "Схема", short: "Схема", Icon: Network },
   ];
   return (
     <div className="-mx-4 sm:mx-0 overflow-x-auto sm:overflow-visible">
