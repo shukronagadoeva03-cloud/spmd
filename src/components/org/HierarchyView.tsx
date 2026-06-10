@@ -179,13 +179,16 @@ export function HierarchyView({ onSelectDept, selectedDept }: Props) {
                         <div className="absolute -left-3 top-1/2 h-px w-3 bg-zinc-300" />
                         <button
                           onClick={() => onSelectDept(p.deptId)}
-                          className={`w-full rounded-md border bg-white px-2 py-1.5 text-left text-[11px] leading-tight text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow ${
+                          className={`flex w-full items-start justify-between gap-2 rounded-md border bg-white px-2 py-1.5 text-left text-[11px] leading-tight text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow ${
                             selectedDept === p.deptId
                               ? `${toneColor.selected} border-zinc-300`
                               : "border-zinc-200 hover:border-zinc-300"
                           }`}
                         >
-                          {p.title}
+                          <span className="flex-1">{p.title}</span>
+                          <span className="shrink-0 rounded bg-zinc-100 px-1 font-mono text-[10px] text-zinc-500">
+                            ×{p.count}
+                          </span>
                         </button>
                       </li>
                     ))}
