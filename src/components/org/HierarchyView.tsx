@@ -1,4 +1,4 @@
-import { hierarchyTree, type HierarchyNode } from "@/data/orgStructure";
+import { hierarchyTree, getDept, type HierarchyNode } from "@/data/orgStructure";
 
 interface Props {
   onSelectDept: (id: string) => void;
@@ -38,6 +38,7 @@ interface ChartNode {
   label: string;
   deptId: string;
   tone: BoxTone;
+  positions?: Array<{ title: string; deptId: string }>;
 }
 
 function findNode(root: HierarchyNode, id: string): HierarchyNode | null {
@@ -55,19 +56,29 @@ function buildChart(): { root: ChartNode; subordinates: ChartNode[] } {
     deptId: hierarchyTree.leadDepartmentId ?? "ceo",
     tone: "ceo",
   };
-  const mapping: Array<{ nodeId: string; label: string; tone: BoxTone }> = [
-    { nodeId: "engineering", label: "Главный инженер", tone: "engineering" },
-    { nodeId: "processing", label: "Начальник ШОУ", tone: "processing" },
-    { nodeId: "supply-chain", label: "Начальник отдела снабжения", tone: "supply" },
-    { nodeId: "security", label: "Начальник службы безопасности", tone: "security" },
-    { nodeId: "administration", label: "Зам. по общим вопросам", tone: "admin" },
+  const mapping: Array<{
+    nodeId: string;
+    label: string;
+    tone: BoxTone;
+    deptIds: string[];
+  }> = [
+    { nodeId: "engineering", label: "Главный инженер", tone: "engineering", deptIds: ["chief-engineer"] },
+    { nodeId: "processing", label: "Начальник ШОУ", tone: "processing", deptIds: ["shou-mgmt"] },
+    { nodeId: "supply-chain", label: "Начальник отдела снабжения", tone: "supply", deptIds: ["supply"] },
+    { nodeId: "security", label: "Начальник службы безопасности", tone: "security", deptIds: ["security-central"] },
+    { nodeId: "administration", label: "Зам. по общим вопросам", tone: "admin", deptIds: ["finance", "hr", "ahc"] },
   ];
-  const subordinates = mapping.map(({ nodeId, label, tone }) => {
+  const subordinates = mapping.map(({ nodeId, label, tone, deptIds }) => {
     const node = findNode(hierarchyTree, nodeId);
+    const positions = deptIds.flatMap((id) => {
+      const d = getDept(id);
+      return d ? d.positions.map((p) => ({ title: p.title, deptId: id })) : [];
+    });
     return {
       label,
-      deptId: node?.leadDepartmentId ?? node?.departmentIds[0] ?? "ceo",
+      deptId: node?.leadDepartmentId ?? node?.departmentIds[0] ?? deptIds[0],
       tone,
+      positions,
     } as ChartNode;
   });
   return { root, subordinates };
@@ -139,18 +150,46 @@ export function HierarchyView({ onSelectDept, selectedDept }: Props) {
       </div>
 
       {/* Subordinate row */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-5 md:gap-3 md:pt-6">
-        {subordinates.map((node) => (
-          <div key={node.label} className="flex flex-col items-center">
-            {/* drop line into each box (desktop) */}
-            <div className="hidden h-6 w-px bg-zinc-400 md:block -mt-6" />
-            <ChartBox
-              node={node}
-              selected={selectedDept === node.deptId}
-              onSelect={onSelectDept}
-            />
-          </div>
-        ))}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-5 md:gap-3 md:pt-6">
+        {subordinates.map((node) => {
+          const toneColor = toneStyles[node.tone];
+          return (
+            <div key={node.label} className="flex flex-col items-stretch">
+              {/* drop line into each box (desktop) */}
+              <div className="mx-auto hidden h-6 w-px bg-zinc-400 md:block -mt-6" />
+              <ChartBox
+                node={node}
+                selected={selectedDept === node.deptId}
+                onSelect={onSelectDept}
+              />
+              {/* Positions tree */}
+              {node.positions && node.positions.length > 0 && (
+                <div className="relative mt-3 pl-5">
+                  {/* vertical trunk */}
+                  <div className="absolute left-2 top-0 bottom-3 w-px bg-zinc-300" />
+                  <ul className="space-y-1.5">
+                    {node.positions.map((p, i) => (
+                      <li key={i} className="relative">
+                        {/* horizontal stub */}
+                        <div className="absolute -left-3 top-1/2 h-px w-3 bg-zinc-300" />
+                        <button
+                          onClick={() => onSelectDept(p.deptId)}
+                          className={`w-full rounded-md border bg-white px-2 py-1.5 text-left text-[11px] leading-tight text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow ${
+                            selectedDept === p.deptId
+                              ? `${toneColor.selected} border-zinc-300`
+                              : "border-zinc-200 hover:border-zinc-300"
+                          }`}
+                        >
+                          {p.title}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       <div className="mt-8 rounded-lg border border-zinc-200 bg-white/70 p-3 text-[11px] text-zinc-500">
