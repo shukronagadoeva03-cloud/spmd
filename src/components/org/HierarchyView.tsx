@@ -38,7 +38,7 @@ interface ChartNode {
   label: string;
   deptId: string;
   tone: BoxTone;
-  positions?: Array<{ title: string; deptId: string }>;
+  positions?: Array<{ title: string; deptId: string; count: number }>;
 }
 
 function findNode(root: HierarchyNode, id: string): HierarchyNode | null {
@@ -50,33 +50,38 @@ function findNode(root: HierarchyNode, id: string): HierarchyNode | null {
   return null;
 }
 
+function collectDeptIds(node: HierarchyNode): string[] {
+  const ids: string[] = [...node.departmentIds];
+  for (const c of node.children ?? []) ids.push(...collectDeptIds(c));
+  return Array.from(new Set(ids));
+}
+
 function buildChart(): { root: ChartNode; subordinates: ChartNode[] } {
   const root: ChartNode = {
     label: "Генеральный директор",
     deptId: hierarchyTree.leadDepartmentId ?? "ceo",
     tone: "ceo",
   };
-  const mapping: Array<{
-    nodeId: string;
-    label: string;
-    tone: BoxTone;
-    deptIds: string[];
-  }> = [
-    { nodeId: "engineering", label: "Главный инженер", tone: "engineering", deptIds: ["chief-engineer"] },
-    { nodeId: "processing", label: "Начальник ШОУ", tone: "processing", deptIds: ["shou-mgmt"] },
-    { nodeId: "supply-chain", label: "Начальник отдела снабжения", tone: "supply", deptIds: ["supply"] },
-    { nodeId: "security", label: "Начальник службы безопасности", tone: "security", deptIds: ["security-central"] },
-    { nodeId: "administration", label: "Зам. по общим вопросам", tone: "admin", deptIds: ["finance", "hr", "ahc"] },
+  const mapping: Array<{ nodeId: string; label: string; tone: BoxTone; leadDept: string }> = [
+    { nodeId: "engineering", label: "Главный инженер", tone: "engineering", leadDept: "chief-engineer" },
+    { nodeId: "processing", label: "Начальник ШОУ", tone: "processing", leadDept: "shou-mgmt" },
+    { nodeId: "supply-chain", label: "Начальник отдела снабжения", tone: "supply", leadDept: "supply" },
+    { nodeId: "security", label: "Начальник службы безопасности", tone: "security", leadDept: "security-central" },
+    { nodeId: "administration", label: "Зам. по общим вопросам", tone: "admin", leadDept: "finance" },
   ];
-  const subordinates = mapping.map(({ nodeId, label, tone, deptIds }) => {
+  const subordinates = mapping.map(({ nodeId, label, tone, leadDept }) => {
     const node = findNode(hierarchyTree, nodeId);
-    const positions = deptIds.flatMap((id) => {
+    const allDeptIds = node ? collectDeptIds(node) : [leadDept];
+    const positions = allDeptIds.flatMap((id) => {
       const d = getDept(id);
-      return d ? d.positions.map((p) => ({ title: p.title, deptId: id })) : [];
+      if (!d) return [];
+      // skip lead position (already represented by parent box) for the lead dept
+      const list = id === leadDept ? d.positions.slice(1) : d.positions;
+      return list.map((p) => ({ title: p.title, deptId: id, count: p.count }));
     });
     return {
       label,
-      deptId: node?.leadDepartmentId ?? node?.departmentIds[0] ?? deptIds[0],
+      deptId: leadDept,
       tone,
       positions,
     } as ChartNode;
