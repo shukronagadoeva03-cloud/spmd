@@ -65,8 +65,8 @@ function useMetrics() {
     const uniquePositions = new Set(departments.flatMap((d) => d.positions.map((p) => p.title)))
       .size;
 
-    // Управленческие должности (rough heuristic)
-    const leadRe = /(директор|начальник|главный|зам|заместитель|бригадир|мастер|старший)/i;
+    // Управленческие должности (rough heuristic) — C-level, Head of, руководители, тимлиды
+    const leadRe = /(\bceo\b|\bc[tofs]o\b|\bcro\b|\bcmo\b|\bchro\b|директор|руководител|head of|tech lead|team lead|начальник|главный|бригадир|senior|architect|архитектор)/i;
     const leads = departments.reduce(
       (s, d) =>
         s +
@@ -112,16 +112,17 @@ function useMetrics() {
       .slice(0, 10)
       .map((d, i) => ({ ...d, fill: PALETTE[i % PALETTE.length] }));
 
-    // Категории должностей
+    // Категории должностей (IT системный интегратор)
     const categories = [
-      { name: "Руководители", re: /(директор|начальник|главный|зам|заместитель)/i },
-      { name: "Мастера / бригадиры", re: /(мастер|бригадир|старший)/i },
-      { name: "Инженеры / специалисты", re: /(инженер|геолог|маркшейдер|логист|аналитик|юрист|эколог|обогатитель|химик|плавильщик|аффинаж|экономист)/i },
-      { name: "Операторы техники", re: /(машинист|оператор|водитель|гидромониторщик|грохотовщик)/i },
-      { name: "Слесари / ремонт", re: /(слесар|сварщик|токарь|фрезеровщик|моторист|электрик|механик)/i },
-      { name: "Охрана / СБ", re: /(охран|инспектор сб|режим|видеонаблюдения|быстрого реагирования|сб\b)/i },
-      { name: "Лаборатория / доводка", re: /(лаборант|доводчик|концентраторщик|магнитной)/i },
-      { name: "АХЧ / сервис", re: /(повар|прачеч|фельдшер|кладовщик|кассир|секретарь|диспетчер|заправщик|дизелист|заведующий)/i },
+      { name: "C-level / руководители", re: /(\bceo\b|\bc[tofs]o\b|\bcro\b|\bcmo\b|\bchro\b|директор|руководител|head of|начальник)/i },
+      { name: "Архитекторы / Tech Lead", re: /(architect|архитектор|tech lead|team lead|senior)/i },
+      { name: "Сетевые / ЦОД инженеры", re: /(сетев|network|wi-fi|sd-wan|ccie|ccnp|серверной|схд|виртуализ|резервного|datacenter|цод)/i },
+      { name: "Cloud / DevOps / Dev / QA", re: /(devops|sre|kubernetes|cloud|разработчик|developer|backend|frontend|mobile|qa engineer|интегратор 1c|ml|ai|iot|research)/i },
+      { name: "Service Desk / NOC / поддержка", re: /(service desk|диспетчер|поддержки|noc|мониторинг|capacity|координатор инцидент)/i },
+      { name: "Безопасность (SOC / аудит / физ.)", re: /(soc|threat|incident response|аудитор|pentester|red team|охранник|скуд|видеонаблюд|физическ)/i },
+      { name: "Sales / Marketing / партнёры", re: /(account manager|маркетол|контент|pr-менеджер|вендор|партнёр|сертификационн|sales)/i },
+      { name: "Финансы / HR / админ", re: /(бухгалтер|финансовый аналит|контроллер|hr business|рекрутер|тренинг|юрист|секретар|помощник|chief of staff|закупщ|логист|кладовщик|водитель)/i },
+      { name: "Монтаж / выездные / R&D-стажёры", re: /(монтажник|электромонтажник|скс|выездной|стажёр|стажер|intern)/i },
     ];
     const allPositions = departments.flatMap((d) =>
       d.positions.map((p) => ({ title: p.title, count: p.count })),
@@ -135,7 +136,7 @@ function useMetrics() {
       return { name: c.name, value, fill: PALETTE[i % PALETTE.length] };
     });
     const other = Math.max(0, total - assigned);
-    if (other > 0) catData.push({ name: "Прочие рабочие", value: other, fill: "#71717a" });
+    if (other > 0) catData.push({ name: "Прочие специалисты", value: other, fill: "#71717a" });
 
     // Соотношение производство vs поддержка
     const production = departments
