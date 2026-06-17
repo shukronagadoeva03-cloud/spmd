@@ -11,9 +11,9 @@ interface Props {
 
 type SalaryMap = Record<string, { salary: number; bonusPct: number }>;
 
-const STORAGE_KEY = "shugnov.staffing.v1";
-const MIN_SALARY = 2000;
-const MAX_SALARY = 13000;
+const STORAGE_KEY = "nets.staffing.v1";
+const MIN_SALARY = 600;
+const MAX_SALARY = 12000;
 
 function clampSalary(value: number): number {
   return Math.min(MAX_SALARY, Math.max(MIN_SALARY, value));
@@ -33,34 +33,34 @@ function normalizeSalaryMap(value: unknown): SalaryMap {
   );
 }
 
-// Эвристика стартовых окладов (сомони TJS / мес) по ключевым словам в названии
+// Эвристика стартовых окладов (USD / мес) для IT-системного интегратора
 function guessSalary(title: string): number {
   const t = title.toLowerCase();
-  if (/(ceo|генеральный директор)/.test(t)) return 13000;
-  if (/директор|главный инженер|главный бухгалтер|hr-директор/.test(t)) return 11000;
-  if (/начальник|главный геолог|главный механик|главный эколог|главный обогатитель/.test(t))
-    return 9000;
-  if (/ведущий|зам|заместитель|мастер цеха|бригадир/.test(t)) return 7500;
-  if (
-    /инженер|геолог|маркшейдер|логист|аналитик|юрист|эколог|обогатитель|плавильщик|аффинаж/.test(t)
-  )
-    return 6500;
-  if (/машинист|оператор экскаватора|оператор|электрик|сварщик|токарь|фрезеровщик|моторист/.test(t))
+  if (/\bceo\b|генеральный директор/.test(t)) return 12000;
+  if (/\b(cto|coo|cfo|cso|chro|cro|cmo)\b|финансовый директор|технический директор|операционный директор|коммерческий директор|директор по/.test(t))
+    return 9500;
+  if (/(enterprise architect|solution architect|cloud architect|network architect|архитектор)/.test(t))
     return 5500;
-  if (/водитель|слесарь|гидромониторщик|грохотовщик|доводчик|концентраторщик|лаборант/.test(t))
-    return 4500;
-  if (/охран|инспектор сб|пост|режим/.test(t)) return 4000;
-  if (/повар|прачеч|фельдшер|кладовщик|кассир|секретарь|диспетчер|заправщик/.test(t)) return 3500;
-  if (/разнорабочий|помощник/.test(t)) return 2000;
-  return 5000;
+  if (/(tech lead|head of|руководитель|начальник|главный)/.test(t)) return 4500;
+  if (/(ccie|kubernetes|sre|devops|threat hunter|incident response|pentester|ml ?\/?ai|research engineer)/.test(t))
+    return 3800;
+  if (/(senior|ведущий|l3|ccnp|backend|cloud|capacity|aудитор|аудитор)/.test(t)) return 3000;
+  if (/(инженер|разработчик|developer|qa|engineer|аналитик|специалист|менеджер|account manager|tech|тренинг|hr business)/.test(t))
+    return 2000;
+  if (/(стажёр|стажер|intern|junior|l1|диспетчер|координатор|рекрутер|маркетолог|контент|pr-менеджер|закупщик|логист)/.test(t))
+    return 1200;
+  if (/(монтажник|электромонтажник|кладовщик|водитель|охранник|оператор скуд|выездной инженер|секретарь|бухгалтер|кассир)/.test(t))
+    return 900;
+  return 1500;
 }
 
 function bonusGuess(title: string): number {
   const t = title.toLowerCase();
-  if (/(машинист ппм|гидромониторщик|грохотовщик|плавильщик|аффинаж|драгметал)/.test(t)) return 25;
-  if (/(вскрыша|добыча|самосвал|бульдозер|экскаватор)/.test(t)) return 20;
-  if (/(охран|сб|режим|видеонаблюдения)/.test(t)) return 15;
-  if (/(директор|главный|начальник)/.test(t)) return 20;
+  if (/(ceo|c[tofs]o|cro|cmo|chro|директор)/.test(t)) return 30;
+  if (/(account manager|sales|продаж|партнёр|cмо|cmo)/.test(t)) return 35;
+  if (/(soc|noc|incident|threat|pentester|dev ?ops|sre|24×7|дежур)/.test(t)) return 20;
+  if (/(architect|tech lead|lead|архитектор|руководитель|начальник)/.test(t)) return 20;
+  if (/(инженер|developer|разработчик|engineer)/.test(t)) return 15;
   return 10;
 }
 
