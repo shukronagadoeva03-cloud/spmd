@@ -19,7 +19,7 @@ export function CycleView({ onSelectDept, selectedDept }: Props) {
       <div className="mb-3 flex items-center gap-2">
         <span className="h-2 w-2 rounded-full bg-yellow-500 animate-pulse" />
         <h3 className="text-sm font-semibold text-zinc-900">
-          Производственный поток: от разведки до слитка
+          Жизненный цикл проекта: от пресейла до SLA-поддержки
         </h3>
       </div>
 

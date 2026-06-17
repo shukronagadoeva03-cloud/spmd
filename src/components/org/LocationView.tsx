@@ -1,4 +1,4 @@
-import { Building2, ShieldCheck, Wrench, Mountain, Droplets } from "lucide-react";
+import { Building2, ShieldCheck, Warehouse, FlaskConical, MapPin, Truck } from "lucide-react";
 import { departments, locations, type LocationId } from "@/data/orgStructure";
 
 interface Props {
@@ -9,10 +9,10 @@ interface Props {
 const icons: Record<LocationId, React.ReactNode> = {
   hq: <Building2 className="h-5 w-5" />,
   shou: <ShieldCheck className="h-5 w-5" />,
-  industrial: <Wrench className="h-5 w-5" />,
-  site1: <Mountain className="h-5 w-5" />,
-  site2: <Mountain className="h-5 w-5" />,
-  water: <Droplets className="h-5 w-5" />,
+  industrial: <Warehouse className="h-5 w-5" />,
+  site1: <FlaskConical className="h-5 w-5" />,
+  site2: <MapPin className="h-5 w-5" />,
+  water: <Truck className="h-5 w-5" />,
 };
 
 export function LocationView({ onSelectDept, selectedDept }: Props) {
@@ -52,10 +52,10 @@ export function LocationView({ onSelectDept, selectedDept }: Props) {
             fill="none"
           />
           <text x="940" y="535" fill="#0ea5e9" fontSize="14" opacity="0.7">
-            р. Шугнов →
+            outbound →
           </text>
           <text x="20" y="535" fill="#0ea5e9" fontSize="14" opacity="0.7">
-            ← верхнее течение
+            ← клиенты
           </text>
         </svg>
 
@@ -112,8 +112,8 @@ export function LocationView({ onSelectDept, selectedDept }: Props) {
       </div>
 
       <p className="mt-3 text-xs text-zinc-500">
-        Подсказка: верхняя терраса — административно-производственная база, нижняя полоса — пойма
-        реки с участками добычи. Кликните по отделу, чтобы увидеть штат.
+        Подсказка: верхний ряд — стационарные офисы NETS (HQ, NOC/SOC, сервисный хаб), нижний ряд —
+        R&D-центр, региональный офис и выездные бригады. Кликните по подразделению, чтобы увидеть штат.
       </p>
     </div>
   );
