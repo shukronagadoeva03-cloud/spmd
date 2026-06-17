@@ -172,7 +172,7 @@ export function StaffingTable({ onSelectDept }: Props) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "shtatnoe-raspisanie-shugnov.csv";
+    a.download = "nets-staffing.csv";
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -186,7 +186,7 @@ export function StaffingTable({ onSelectDept }: Props) {
             Обезличенный документ, фиксирующий организационную структуру компании. Должности
             расположены иерархически — от руководителя к подчинённым, с указанием кода
             подразделения, штатных единиц, оклада и надбавки. Оклады ограничены диапазоном от 2 000
-            до 13 000 TJS. Ячейки оклада и надбавки можно редактировать — данные сохраняются в этом
+            до 13 000 USD. Ячейки оклада и надбавки можно редактировать — данные сохраняются в этом
             браузере.
           </p>
         </div>
@@ -214,11 +214,11 @@ export function StaffingTable({ onSelectDept }: Props) {
 
       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
         <SummaryCard label="Всего штатных единиц" value={`${totals.units} чел.`} />
-        <SummaryCard label="Месячный ФОТ" value={`${fmt(totals.fund)} TJS`} />
-        <SummaryCard label="Годовой ФОТ" value={`${fmt(totals.fund * 12)} TJS`} />
+        <SummaryCard label="Месячный ФОТ" value={`${fmt(totals.fund)} USD`} />
+        <SummaryCard label="Годовой ФОТ" value={`${fmt(totals.fund * 12)} USD`} />
         <SummaryCard
           label="Средняя з/п (с надб.)"
-          value={`${fmt(Math.round(totals.fund / Math.max(totals.units, 1)))} TJS`}
+          value={`${fmt(Math.round(totals.fund / Math.max(totals.units, 1)))} USD`}
         />
       </div>
 
@@ -229,7 +229,7 @@ export function StaffingTable({ onSelectDept }: Props) {
               <th className="px-3 py-2 font-medium">Код</th>
               <th className="px-3 py-2 font-medium">Должность</th>
               <th className="px-3 py-2 font-medium text-right">Шт. ед.</th>
-              <th className="px-3 py-2 font-medium text-right">Оклад, TJS</th>
+              <th className="px-3 py-2 font-medium text-right">Оклад, USD</th>
               <th className="px-3 py-2 font-medium text-right">Надб., %</th>
               <th className="px-3 py-2 font-medium text-right">ФОТ / мес</th>
             </tr>
@@ -321,12 +321,12 @@ export function StaffingTable({ onSelectDept }: Props) {
           <tfoot>
             <tr className="border-t-2 border-zinc-300 bg-yellow-50/60">
               <td className="px-3 py-2 font-mono text-[11px] text-zinc-600">ИТОГО</td>
-              <td className="px-3 py-2 font-semibold text-zinc-900">По компании</td>
+              <td className="px-3 py-2 font-semibold text-zinc-900">По NETS</td>
               <td className="px-3 py-2 text-right font-semibold text-zinc-900">{totals.units}</td>
               <td className="px-3 py-2" />
               <td className="px-3 py-2" />
               <td className="px-3 py-2 text-right font-bold text-yellow-700">
-                {fmt(totals.fund)} TJS
+                {fmt(totals.fund)} USD
               </td>
             </tr>
           </tfoot>
