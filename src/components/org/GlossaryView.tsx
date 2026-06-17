@@ -64,7 +64,7 @@ export function GlossaryView({ onSwitchView }: Props) {
             <Input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Поиск: ШЛИХ, ППМ, эфеля…"
+              placeholder="Поиск: SLA, SOC, Kubernetes…"
               className="pl-9 bg-white border-zinc-300"
             />
             {q && (

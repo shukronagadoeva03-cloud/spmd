@@ -15,17 +15,17 @@ import { totalHeadcount, departments, locations } from "@/data/orgStructure";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Оргструктура — Шугнов Голд" },
+      { title: "Оргструктура — NETS (IT системный интегратор)" },
       {
         name: "description",
         content:
-          "Интерактивная организационная структура золотодобывающей компании полного цикла на реке Шугнов: 2000 га, 8× ППМ-5, три вида — по локациям, по производственному циклу и по иерархии подчинения.",
+          "Интерактивная организационная структура NETS — IT системного интегратора: ~270 сотрудников, 6 C-level, NOC/SOC 24×7, R&D-центр, региональные офисы. Шесть видов структуры в одном дашборде.",
       },
-      { property: "og:title", content: "Оргструктура — Шугнов Голд" },
+      { property: "og:title", content: "Оргструктура — NETS" },
       {
         property: "og:description",
         content:
-          "Интерактивная оргструктура золотодобывающей компании полного цикла. 2000 га, 8× ППМ-5.",
+          "Интерактивная оргструктура IT системного интегратора NETS: C-level, технические департаменты, NOC/SOC 24×7, сервис и поддержка.",
       },
     ],
   }),
@@ -37,7 +37,7 @@ function Index() {
   const [selectedDept, setSelectedDept] = useState<string | null>(null);
 
   const total = totalHeadcount();
-  const sitesCount = locations.filter((l) => l.id === "site1" || l.id === "site2").length;
+  const officesCount = locations.length;
 
   return (
     <div className="min-h-screen bg-white text-zinc-900">
@@ -46,16 +46,16 @@ function Index() {
           <div className="flex flex-col gap-4 lg:flex-row lg:flex-wrap lg:items-start lg:justify-between">
             <div className="min-w-0">
               <div className="text-[11px] uppercase tracking-[0.2em] text-yellow-600">
-                Aurum · р. Шугнов · Ховалинг, Таджикистан
+                NETS · IT системный интегратор · Душанбе — Худжанд
               </div>
               <h1 className="mt-1 text-2xl sm:text-3xl md:text-4xl font-bold leading-tight bg-gradient-to-r from-yellow-500 via-yellow-600 to-amber-700 bg-clip-text text-transparent">
-                Оргструктура золотодобывающей компании
+                Оргструктура NETS
               </h1>
               <p className="mt-2 max-w-2xl text-xs sm:text-sm text-zinc-600">
-                Полный цикл промывки золота на 2000 гектарах поймы реки Шугнов с использованием 8
-                промывочных приборов ППМ-5. Переключайте вид, чтобы увидеть физическое размещение
-                отделов, порядок их участия в производственном цикле или схему управленческого
-                подчинения.
+                Системный интегратор полного цикла: пресейл, архитектура, поставка, монтаж,
+                интеграция и поддержка по SLA. Шесть C-level, NOC/SOC 24×7, R&D-центр и сеть
+                региональных площадок. Переключайте вид, чтобы увидеть офисы, жизненный цикл проекта
+                или схему управленческого подчинения.
               </p>
             </div>
             <ViewToggle view={view} onChange={setView} />
@@ -88,9 +88,9 @@ function Index() {
 
         <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Stat label="Сотрудников" value={total.toString()} suffix="чел." />
-          <Stat label="Машин ППМ-5" value="8" suffix="шт." />
-          <Stat label="Горных участков" value={sitesCount.toString()} suffix="пл." />
-          <Stat label="Площадь" value="2 000" suffix="га" />
+          <Stat label="Офисов" value={officesCount.toString()} suffix="пл." />
+          <Stat label="C-level" value="6" suffix="ролей" />
+          <Stat label="NOC / SOC" value="24×7" suffix="режим" />
         </section>
 
         <section className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6 text-[11px]">
@@ -111,8 +111,8 @@ function Index() {
         </section>
 
         <footer className="mt-8 text-center text-[11px] text-zinc-500">
-          Кликните по любому отделу, чтобы увидеть полный штат должностей и переключиться между
-          видами.
+          Кликните по любому подразделению, чтобы увидеть полный штат должностей и переключиться
+          между видами.
         </footer>
       </div>
 

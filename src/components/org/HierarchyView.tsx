@@ -5,30 +5,34 @@ interface Props {
   selectedDept: string | null;
 }
 
-type BoxTone = "ceo" | "engineering" | "processing" | "supply" | "security" | "admin";
+type BoxTone = "ceo" | "cto" | "coo" | "cso" | "cro" | "cfo" | "chro";
 
 const toneStyles: Record<BoxTone, { box: string; selected: string }> = {
   ceo: {
     box: "bg-[#bac8d3] border-[#23445d] text-zinc-900",
     selected: "ring-2 ring-yellow-500/60",
   },
-  engineering: {
+  cto: {
     box: "bg-[#6d8764] border-[#3A5431] text-white",
     selected: "ring-2 ring-yellow-300",
   },
-  processing: {
+  coo: {
     box: "bg-[#e3c800] border-[#B09500] text-zinc-900",
     selected: "ring-2 ring-yellow-700",
   },
-  supply: {
-    box: "bg-[#f8cecc] border-[#b85450] text-zinc-900",
-    selected: "ring-2 ring-rose-700",
-  },
-  security: {
+  cso: {
     box: "bg-[#eeeeee] border-zinc-400 text-zinc-900",
     selected: "ring-2 ring-zinc-700",
   },
-  admin: {
+  cro: {
+    box: "bg-[#f4b183] border-[#b85d1e] text-zinc-900",
+    selected: "ring-2 ring-orange-700",
+  },
+  cfo: {
+    box: "bg-[#f8cecc] border-[#b85450] text-zinc-900",
+    selected: "ring-2 ring-rose-700",
+  },
+  chro: {
     box: "bg-[#d0cee2] border-[#56517e] text-zinc-900",
     selected: "ring-2 ring-indigo-500",
   },
@@ -58,16 +62,17 @@ function collectDeptIds(node: HierarchyNode): string[] {
 
 function buildChart(): { root: ChartNode; subordinates: ChartNode[] } {
   const root: ChartNode = {
-    label: "Генеральный директор",
+    label: "CEO — Генеральный директор",
     deptId: hierarchyTree.leadDepartmentId ?? "ceo",
     tone: "ceo",
   };
   const mapping: Array<{ nodeId: string; label: string; tone: BoxTone; leadDept: string }> = [
-    { nodeId: "engineering", label: "Главный инженер", tone: "engineering", leadDept: "chief-engineer" },
-    { nodeId: "processing", label: "Начальник ШОУ", tone: "processing", leadDept: "shou-mgmt" },
-    { nodeId: "supply-chain", label: "Начальник отдела снабжения", tone: "supply", leadDept: "supply" },
-    { nodeId: "security", label: "Начальник службы безопасности", tone: "security", leadDept: "security-central" },
-    { nodeId: "administration", label: "Зам. по общим вопросам", tone: "admin", leadDept: "finance" },
+    { nodeId: "tech", label: "CTO — Технический директор", tone: "cto", leadDept: "cto-office" },
+    { nodeId: "operations", label: "COO — Операционный директор", tone: "coo", leadDept: "coo-office" },
+    { nodeId: "infosec", label: "CSO — Директор по ИБ", tone: "cso", leadDept: "cso-office" },
+    { nodeId: "commercial", label: "CRO — Коммерческий директор", tone: "cro", leadDept: "sales" },
+    { nodeId: "finance", label: "CFO — Финансовый директор", tone: "cfo", leadDept: "finance" },
+    { nodeId: "people", label: "CHRO — Директор по персоналу", tone: "chro", leadDept: "hr" },
   ];
   const subordinates = mapping.map(({ nodeId, label, tone, leadDept }) => {
     const node = findNode(hierarchyTree, nodeId);
@@ -75,7 +80,6 @@ function buildChart(): { root: ChartNode; subordinates: ChartNode[] } {
     const positions = allDeptIds.flatMap((id) => {
       const d = getDept(id);
       if (!d) return [];
-      // skip lead position (already represented by parent box) for the lead dept
       const list = id === leadDept ? d.positions.slice(1) : d.positions;
       return list.map((p) => ({ title: p.title, deptId: id, count: p.count }));
     });
@@ -155,7 +159,7 @@ export function HierarchyView({ onSelectDept, selectedDept }: Props) {
       </div>
 
       {/* Subordinate row */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-5 md:gap-3 md:pt-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-6 md:gap-3 md:pt-6">
         {subordinates.map((node) => {
           const toneColor = toneStyles[node.tone];
           return (
