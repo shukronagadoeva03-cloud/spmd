@@ -254,8 +254,8 @@ const tooltipStyle = {
 function OverviewDashboard() {
   const m = useMetrics();
   const prodVsSupport = [
-    { name: "Производство", value: m.production, fill: "#eab308" },
-    { name: "Поддержка", value: m.support, fill: "#0ea5e9" },
+    { name: "Проектные работы", value: m.production, fill: "#eab308" },
+    { name: "Сервис и поддержка", value: m.support, fill: "#0ea5e9" },
   ];
 
   return (
@@ -331,8 +331,8 @@ function OverviewDashboard() {
         </Panel>
 
         <Panel
-          title="Производство vs поддержка"
-          subtitle="Линейный персонал и обеспечение"
+          title="Проекты vs поддержка"
+          subtitle="Проектная работа и сервис"
           icon={PieIcon}
         >
           <div className="h-72">
@@ -372,8 +372,8 @@ function OverviewDashboard() {
 
       <div className="grid gap-4 lg:grid-cols-3">
         <Panel
-          title="Структура цикла производства"
-          subtitle="Сотрудники по этапам полного цикла"
+          title="Структура жизненного цикла"
+          subtitle="Сотрудники по этапам проекта"
           icon={Layers}
           className="lg:col-span-2"
         >
@@ -406,7 +406,7 @@ function OverviewDashboard() {
           </div>
         </Panel>
 
-        <Panel title="Сервисные треки" subtitle="Обеспечивающие службы" icon={BarChart3}>
+        <Panel title="Поддерживающие треки" subtitle="Сквозные службы NETS" icon={BarChart3}>
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <RadialBarChart
@@ -459,19 +459,19 @@ function WorkforceDashboard() {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard
           icon={Users}
-          label="Линейный персонал"
+          label="Проектный персонал"
           value={fmt(m.production)}
           suffix="чел."
           accent="from-emerald-400 to-teal-600"
-          hint="на производственном цикле"
+          hint="в проектной работе"
         />
         <KpiCard
           icon={Briefcase}
-          label="Обеспечение"
+          label="Сервис и админ"
           value={fmt(m.support)}
           suffix="чел."
           accent="from-sky-400 to-indigo-600"
-          hint="сервис, охрана, АХЧ, HR"
+          hint="сервис, ИБ, HR, финансы"
         />
         <KpiCard
           icon={UserCheck}
